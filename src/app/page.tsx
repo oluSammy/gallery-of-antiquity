@@ -1,113 +1,143 @@
-import Image from 'next/image'
+import GalleryPicture from "@/components/GalleryPicture/GalleryPicture";
+import Hero from "@/components/Hero/Hero";
+import PageLayout from "@/containers/PageLayout";
+import { IoIosArrowForward } from "react-icons/io";
+import Link from "next/link";
+import Image from "next/image";
+import { IoIosArrowRoundForward } from "react-icons/io";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
+    <PageLayout>
+      <Hero />
+
+      {/* photograph highlight section */}
+      <section className="py-10 mt-8">
+        <p className="uppercase text-center text-[#FA0303] text-sm font-bold">
+          Our Gallery
         </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <p className="capitalize text-center text-[#1B2336] font-semibold text-[42px] leading-[50px]">
+          Some Photograph <br /> highlights in the centre
+        </p>
+
+        <div className="container mx-auto mt-8">
+          <div className="grid grid-cols-12 gap-x-4">
+            <div className="col-span-full lg:col-span-4">
+              <GalleryPicture
+                category="Environment"
+                imgSrc="/1.png"
+                name="Nature View"
+                numberInStock={23}
+              />
+            </div>
+            <div className="col-span-full lg:col-span-4">
+              <GalleryPicture
+                category="Environment"
+                imgSrc="/2.png"
+                name="Nature View"
+                numberInStock={23}
+              />
+            </div>
+            <div className="col-span-full lg:col-span-4">
+              <GalleryPicture
+                category="Environment"
+                imgSrc="/3.png"
+                name="Nature View"
+                numberInStock={23}
+              />
+            </div>
+          </div>
+
+          <Link
+            href="/gallery"
+            className="text-[#FF4250] underline flex items-center justify-center mt-6"
           >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+            {" "}
+            <span>See More</span>
+            <span className="inline ml-1">
+              <IoIosArrowForward />
+            </span>
+          </Link>
         </div>
-      </div>
+      </section>
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+      {/* Visit the museum section */}
+      <section className="bg-[#F6F6F6] py-12 ">
+        <div className="container mx-auto ">
+          <div className="grid grid-cols-12">
+            <figure className="col-span-full lg:col-span-6">
+              <Image
+                src="/musuem-01.jpg"
+                width={1000}
+                height={1000}
+                alt="visit the musuem"
+                className="w-full h-full object-cover rounded-lg"
+              />
+            </figure>
+            <div className="col-span-full lg:col-span-6 lg:mt-0 mt-8 ">
+              <p className="text-center text-[#171717] font-semibold text-5xl opacity-60 mb-4 ">
+                Visit the museum
+              </p>
+              <div className="bg-white px-8 ">
+                <div className="flex justify-center items-center py-6 font-normal sans border-b">
+                  <div className="bg-[#FCC1C1] h-5 w-5 rounded-full flex items-center justify-center mr-2">
+                    <div className="bg-[#FA0303] h-3 w-3 rounded-full">
+                      &nbsp;
+                    </div>
+                  </div>
+                  <span className="text-[#F47171] mr-2">
+                    Center opens today from{" "}
+                  </span>
+                  <span className="text-[#2C2B2B] font-bold">
+                    10:00 AM to 10:00PM
+                  </span>
+                </div>
+                <div className="flex text-2xl  sans px-10">
+                  <div className=" border-b w-full text-center py-6">
+                    <p className="text-[#383838] font-bold">
+                      10:00 AM &#x2192; 10:00PM
+                    </p>
+                    <p className="text-[#696161] font-light text-base">
+                      Monday - Sunday
+                    </p>
+                  </div>
+                </div>
+                <div className="flex text-2xl  sans px-10">
+                  <div className=" border-b w-full text-center py-6">
+                    <p className="text-[#383838] font-bold">8:00PM</p>
+                    <p className="text-[#696161] font-light text-base">
+                      Last Entry
+                    </p>
+                  </div>
+                </div>
+                <div className="flex text-2xl  sans px-10">
+                  <div className=" border-b w-full text-center py-6">
+                    <p className="text-[#383838] font-bold">2 Hours</p>
+                    <p className="text-[#696161] font-light text-base">
+                      Duration
+                    </p>
+                  </div>
+                </div>
+                <div className="text-center px-10 py-4">
+                  <p className="text-[#FC6565]">Public Holidays:</p>
+                  <p className="text-[15px] text-[#5B5656] font-light">
+                    It remains open on all other public holidays except
+                    otherwise which should be communicated here.
+                  </p>
+                </div>
+                <div className="flex justify-center pb-4">
+                  <button className="btn bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
+                    Plan Your Visit
+                    <span className="ml-2">
+                      <IoIosArrowRoundForward />
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </PageLayout>
+  );
 }
