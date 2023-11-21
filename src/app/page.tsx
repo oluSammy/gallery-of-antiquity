@@ -5,6 +5,8 @@ import { IoIosArrowForward } from "react-icons/io";
 import Link from "next/link";
 import Image from "next/image";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Product from "@/components/Product/Product";
+import StatesPicture from "@/components/StatesPicture/StatesPicture";
 
 export default function Home() {
   return (
@@ -22,7 +24,7 @@ export default function Home() {
 
         <div className="container mx-auto mt-8">
           <div className="grid grid-cols-12 gap-x-4">
-            <div className="col-span-full lg:col-span-4">
+            <div className="col-span-full lg:col-span-4 px-2 lg:px-0">
               <GalleryPicture
                 category="Environment"
                 imgSrc="/1.png"
@@ -30,7 +32,7 @@ export default function Home() {
                 numberInStock={23}
               />
             </div>
-            <div className="col-span-full lg:col-span-4">
+            <div className="col-span-full lg:col-span-4 px-2 lg:px-0">
               <GalleryPicture
                 category="Environment"
                 imgSrc="/2.png"
@@ -38,7 +40,7 @@ export default function Home() {
                 numberInStock={23}
               />
             </div>
-            <div className="col-span-full lg:col-span-4">
+            <div className="col-span-full lg:col-span-4 px-2 lg:px-0">
               <GalleryPicture
                 category="Environment"
                 imgSrc="/3.png"
@@ -134,6 +136,93 @@ export default function Home() {
                   </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Explore Our Products */}
+      <section className="my-6">
+        <div className="container mx-auto">
+          <div className="flex mb-8 justify-between items-center px-4">
+            <h2 className="text-[#363636] font-semibold text-4xl relative border-w py-2 ">
+              Explore Our Products
+            </h2>
+            <Link
+              href="/gallery"
+              className="text-[#FF4250] underline flex items-center justify-center"
+            >
+              <span>See More</span>
+              <span className="inline ml-1">
+                <IoIosArrowForward />
+              </span>
+            </Link>
+          </div>
+          <div className="grid grid-cols-12 items-stretch auto-rows-fr">
+            <div className="col-span-full lg:col-span-4 mb-3 lg:mb-0 px-2 lg:px-0">
+              <Product imgSrc="/2.png" name="Pictures" numberInStock={5000} />
+            </div>
+            <div className="col-span-full lg:col-span-4 mb-3 lg:mb-0 px-2 lg:px-0">
+              <Product
+                imgSrc="/fela.png"
+                name="Nigeria Souvenirs"
+                numberInStock={5000}
+              />
+            </div>
+            <div className="col-span-full lg:col-span-4 mb-3 lg:mb-0 px-2 lg:px-0">
+              <Product imgSrc="/books.jpg" name="Books" numberInStock={5000} />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* History Section */}
+      <section className="my-8">
+        <div className="container mx-auto">
+          <div className="flex mb-8 justify-between items-center px-4">
+            <h2 className="text-[#363636] font-semibold text-4xl relative border-w py-2 ">
+              History of the states
+            </h2>
+            <Link
+              href="/gallery"
+              className="text-[#FF4250] underline flex items-center justify-center"
+            >
+              <span>See More</span>
+              <span className="inline ml-1">
+                <IoIosArrowForward />
+              </span>
+            </Link>
+          </div>
+        </div>
+        <div className="container mx-auto">
+          <div className="grid grid-cols-12 gap-x-6">
+            <div className=" col-span-full lg:col-span-3 mb-10 lg:mb-0 px-2 lg:px-0">
+              <StatesPicture
+                imgSrc="/lagos.png"
+                name="Abuja"
+                text="FCT, is a federal territory in the central Nigeria.  Abuja, is the capital city of Nigeria, and is located in this.."
+              />
+            </div>
+            <div className=" col-span-full lg:col-span-3 mb-10 lg:mb-0 px-2 lg:px-0">
+              <StatesPicture
+                imgSrc="/oyo.png"
+                name="Oyo"
+                text="Yobe is a state located in northeastern Nigeria. A mainly agricultural state, it was created on 27 August 1991.."
+              />
+            </div>
+            <div className=" col-span-full lg:col-span-3 mb-10 lg:mb-0 px-2 lg:px-0">
+              <StatesPicture
+                imgSrc="/yobe.png"
+                name="Lagos"
+                text="FCT, is a federal territory in the central Nigeria.  Abuja, is the capital city of Nigeria, and is located in this.."
+              />
+            </div>
+            <div className=" col-span-full lg:col-span-3 mb-10 lg:mb-0 px-2 lg:px-0">
+              <StatesPicture
+                imgSrc="/kaduna.png"
+                name="Kaduna"
+                text="FCT, is a federal territory in the central Nigeria.  Abuja, is the capital city of Nigeria, and is located in this.."
+              />
             </div>
           </div>
         </div>

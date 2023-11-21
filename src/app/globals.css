@@ -6,5 +6,15 @@
   font-family: "Noto Sans Hanunoo", sans-serif;
 }
 
+.border-w::after {
+  content: "";
+  background: red;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 20%;
+}
+
 body {
 }
