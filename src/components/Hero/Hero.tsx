@@ -22,7 +22,7 @@ const Hero = () => {
   return (
     <div className="hero -mt-4">
       <video autoPlay loop muted playsInline ref={vidRef} className="bg-video">
-        <source src="/musuem.mp4" type="video/mp4" />
+        <source src="https://res.cloudinary.com/olumorinsamuel/video/upload/v1700597392/musuem_rlvudt.mp4" type="video/mp4" />
       </video>
       <div className="overlay group">
         <h1 className="text-white lg:text-left text-center font-bold text-4xl lg:text-[51px] lg:leading-[52px] ">
