@@ -81,8 +81,12 @@ const Footer = () => {
                 Learn
               </h6>
               <ul className="text-sm font-normal">
-                <p className=" mb-3">History of state</p>
-                <p className="mb-3">Library</p>
+                <Link href="/history" className=" mb-3">
+                  History of state
+                </Link>
+                <Link href="library" className="mb-3">
+                  Library
+                </Link>
               </ul>
             </div>
             <div className="col-span-3">

@@ -1,6 +1,9 @@
+"use client";
+
+import SearchBox from "@/components/SearchBox/SearchBox";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navigation/Navbar";
-import React from "react";
+import { useState } from "react";
 
 interface Props {
   children: React.ReactNode;
@@ -8,12 +11,17 @@ interface Props {
 }
 
 const PageLayout = (props: Props) => {
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   return (
     <main className={props.className}>
-      <Navbar />
-
-      {props.children}
-      <Footer />
+      <Navbar isSearchOpen={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />
+      {isSearchOpen ? (
+        <SearchBox closeSearch={setIsSearchOpen} />
+      ) : (
+        <main className="-mt-4">
+          {props.children} <Footer />
+        </main>
+      )}
     </main>
   );
 };

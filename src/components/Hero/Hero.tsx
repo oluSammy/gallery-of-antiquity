@@ -20,7 +20,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="hero -mt-4">
+    <div className="hero">
       <video autoPlay loop muted playsInline ref={vidRef} className="bg-video">
         <source src="https://res.cloudinary.com/olumorinsamuel/video/upload/v1700597392/musuem_rlvudt.mp4" type="video/mp4" />
       </video>
