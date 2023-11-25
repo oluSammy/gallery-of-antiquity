@@ -19,7 +19,7 @@ const Footer = () => {
                   placeholder="example@gmail.com"
                   className="bg-transparent border-none px-2 rounded-full w-fit text-[#989898] outline-none sans "
                 />
-                <button className="h-full px-4 rounded-full font-semibold bg-[#FA0303] text-white text-base">
+                <button className="h-full px-2 lg:px-4 rounded-full font-semibold bg-[#FA0303] text-white text-base">
                   Subscribe
                 </button>
               </form>

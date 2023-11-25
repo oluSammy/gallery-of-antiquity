@@ -1,3 +1,4 @@
+import DarkHero from "@/components/DarkHero/DarkHero";
 import HistorySection from "@/components/HistorySection/HistorySection";
 import TeamSection from "@/components/TeamSection/TeamSection";
 import PageLayout from "@/containers/PageLayout";
@@ -10,14 +11,7 @@ const page = () => {
   return (
     <PageLayout>
       <div>
-        <div className="h-96 bg-[#231F20] w-full flex items-center justify-center">
-          <div>
-            <h1 className="text-white font-medium text-[60px]">About Us</h1>
-            <h6 className="text-[#DBD8D8] font-normal text-xl text-center">
-              The Future Of Museum
-            </h6>
-          </div>
-        </div>
+        <DarkHero subtitle=" The Future Of Museum" title="About Us" />
         <div className="my-28 text-center container mx-auto sans text-[#4C5760] text-xl font-light px-6 lg:px-28">
           <p>
             DAP Experience Centre is unique in bringing together under one roof
