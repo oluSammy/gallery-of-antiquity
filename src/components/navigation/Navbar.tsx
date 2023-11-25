@@ -23,8 +23,8 @@ const links = [
         label: "About Us",
       },
       {
-        link: "Making of Dap Centre",
-        label: "making-of-daps",
+        link: "making-of-daps",
+        label: "Making of Dap Centre",
       },
     ],
   },
@@ -226,8 +226,6 @@ const MobileNav = ({
             key={link.label}
             classNames={{
               trigger: "mb-5",
-              // content: "flex flex-col",
-              // item: "mb-4 flex flex-col ",
             }}
             items={[
               {

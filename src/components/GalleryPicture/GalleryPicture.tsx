@@ -11,7 +11,7 @@ interface Props {
 
 const GalleryPicture = (props: Props) => {
   return (
-    <div className="relative lg:w-fit w-full">
+    <div className="relative lg:w-fit w-full overflow-hidden group cursor-pointer">
       <Image
         src={props.imgSrc}
         alt={props.name}
@@ -26,7 +26,7 @@ const GalleryPicture = (props: Props) => {
         </p>
       </div>
       {props.price && (
-        <div className="absolute bottom-2 right-3 sans bg-white rounded-full py-3 px-6">
+        <div className="absolute -bottom-28 group-hover:bottom-2 right-3 sans bg-white rounded-full py-3 px-6">
           From &#x20A6; {formatNumber(props.price)}
         </div>
       )}
