@@ -92,13 +92,15 @@ const Navbar = (props: Props) => {
 
   return (
     <nav className="flex items-center px-8 pt-2 ">
-      <Image
-        src="/daps.png"
-        alt="Daps Logo"
-        width={150}
-        height={10}
-        className="mr-4 z-10"
-      />
+      <Link href="/">
+        <Image
+          src="/daps.png"
+          alt="Daps Logo"
+          width={150}
+          height={10}
+          className="mr-4 z-10 cursor-pointer"
+        />
+      </Link>
       <ul className="items-center hidden tab:flex ml-8">
         {links.map((link) => (
           <li key={link.label} className="mr-4">
