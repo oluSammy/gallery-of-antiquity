@@ -8,6 +8,9 @@ import TicketInfo from "@/components/TicketInfo/TicketInfo";
 import { useEffect, useRef } from "react";
 import TabsDemo from "@/components/Tabs/Tabs";
 import Accordion from "@/components/Accordion/Accordion";
+import Iframe from "react-iframe";
+
+import "../../components/TicketInfo/style.css";
 
 const btnStyle = `border-2 border-black w-1/4 text-center pb-8 cursor-pointer`;
 
@@ -33,6 +36,8 @@ const tabs = [
     ref: "knowBeforeRef",
   },
 ];
+
+const triggerClassName = "mb-8 hover:bg-[#f7f7f7] px-4 py-4 ";
 
 const Page = () => {
   const [tab, setTab] = useQueryState("tab");
@@ -140,7 +145,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="my-20" id="opening-hours" ref={refs.openingHrsRef}>
+      <div className="my-20" id="opening-hours">
         <div className="text-center mb-8">
           <h6 className="text-[#1B2336] font-semibold text-3xl lg:text-[42px]">
             Opening Hours
@@ -158,7 +163,10 @@ const Page = () => {
               />
             </figure>
           </div>
-          <div className="grid grid-cols-12 border mt-10 p-10">
+          <div
+            className="grid grid-cols-12 border mt-10 p-10 "
+            ref={refs.openingHrsRef}
+          >
             <div className="col-span-full lg:col-span-6">
               <h5 className="text-black font-medium text-3xl ">
                 Hour & Admission
@@ -221,7 +229,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="container mx-auto">
+      <div className="container mx-auto" ref={refs.knowBeforeRef}>
         <div className="text-center mb-8">
           <h4 className="font-bold text-[#FA0303] text-sm">Our Centre</h4>
           <h6 className="text-[#1B2336] font-semibold text-3xl lg:text-[42px]">
@@ -239,8 +247,8 @@ const Page = () => {
         <div className="my-20">
           <Accordion
             classNames={{
-              trigger: "mb-5 border-b",
-              wrapper: "px-5",
+              trigger: triggerClassName,
+              wrapper: " mb-10 border-b-2 border-black",
             }}
             items={[
               {
@@ -249,7 +257,61 @@ const Page = () => {
                     Entry and Guidelines
                   </button>
                 ),
-                content: <div>Hello wrld...</div>,
+                content: <EntryGuideLine />,
+                value: "#232323",
+              },
+            ]}
+            type="single"
+          />
+          <Accordion
+            classNames={{
+              trigger: triggerClassName,
+              wrapper: " mb-10 border-b-2 border-black",
+            }}
+            items={[
+              {
+                title: (
+                  <button className="text-3xl text-[#363636] font-semibold border-b">
+                    Directions To the Museum
+                  </button>
+                ),
+                content: <Directions />,
+                value: "#232323",
+              },
+            ]}
+            type="single"
+          />
+          <Accordion
+            classNames={{
+              trigger: triggerClassName,
+              wrapper: " mb-10 border-b-2 border-black",
+            }}
+            items={[
+              {
+                title: (
+                  <button className="text-3xl text-[#363636] font-semibold border-b">
+                    Cafe
+                  </button>
+                ),
+                content: <Cafe />,
+                value: "#232323",
+              },
+            ]}
+            type="single"
+          />
+          <Accordion
+            classNames={{
+              trigger: triggerClassName,
+              wrapper: " mb-10 border-b-2 border-black",
+            }}
+            items={[
+              {
+                title: (
+                  <button className="text-3xl text-[#363636] font-semibold border-b">
+                    Taking Pictures In The Museum
+                  </button>
+                ),
+                content: <EntryGuideLine />,
                 value: "#232323",
               },
             ]}
@@ -258,6 +320,120 @@ const Page = () => {
         </div>
       </div>
     </PageLayout>
+  );
+};
+
+const EntryGuideLine = () => {
+  return (
+    <div className="grid grid-cols-12 gap-8 ">
+      <div className="col-span-full lg:col-span-6">
+        <ul className="list-none md:list-disc">
+          <li className="list-none md:list-disc mb-4 ">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse
+            incidunt aspernatur officiis omnis dolorum voluptatum labore ea eius
+            distinctio maiores.
+          </li>
+          <li className="list-none md:list-disc mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            accusantium. Non voluptatum sequi labore incidunt placeat error
+            perspiciatis culpa. Deserunt, quaerat error.
+          </li>
+          <li className="list-none md:list-disc mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            error debitis sit, neque asperiores quas enim deleniti perspiciatis
+            aliquam officiis aspernatur ut, ab odit sunt temporibus molestiae
+            accusantium. Non voluptatum sequi
+          </li>
+          <li className="list-none md:list-disc mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Provident
+            error debitis sit, neque asperiores quas enim deleniti perspiciatis
+            aliquam officiis aspernatur ut, ab odit sunt temporibus molestiae
+            accusantium. Non voluptatum sequi labore incidunt placeat error
+          </li>
+        </ul>
+      </div>
+      <div className="col-span-full lg:col-span-6">
+        <figure className="h-[400px] w-full mb-8">
+          <Image
+            src="/musuem-01.jpg"
+            alt="Dap musuem"
+            width={400}
+            height={400}
+            className="max-lg:w-full h-full w-full object-cover"
+          />
+        </figure>
+      </div>
+    </div>
+  );
+};
+
+const Directions = () => {
+  return (
+    <div className="grid grid-cols-12 gap-x-20 pb-4">
+      <div className="col-span-full lg:col-span-6">
+        <div style={{ width: "100%" }}>
+          <Iframe
+            url="https://maps.google.com/maps?width=100%25&amp;height=400&amp;hl=en&amp;q=34,%20Allen%20Avenue.%20Addam%20road.%20+(Dap%20Experience%20Centre)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+            width="640px"
+            height="320px"
+            id=""
+            className="rounded-lg "
+            display="block"
+            position="relative"
+          />
+        </div>
+      </div>
+      <div className="col-span-full lg:col-span-6">
+        <div className="mb-14 border-b">
+          <div className="pl-4">
+            <h4 className="font-semibold text-xl">MAIN ENTRANCE</h4>
+            <p className="font-light text-sm">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+              adipisci temporibus id quidem labore dolorem, ratione earum, dicta
+              voluptatem error non deserunt molestiae repellat fugiat ullam
+              itaque perferendis excepturi accusamus.
+            </p>
+          </div>
+        </div>
+        <div className="mb-4 border-b">
+          <div className="pl-4">
+            <h4 className="font-semibold text-xl">MAIN ENTRANCE</h4>
+            <p className="font-light text-sm">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos
+              adipisci temporibus id quidem labore dolorem, ratione earum, dicta
+              voluptatem error non deserunt molestiae repellat fugiat ullam
+              itaque perferendis excepturi accusamus.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div></div>
+    </div>
+  );
+};
+
+const Cafe = () => {
+  return (
+    <div className="relative pb-4">
+      <figure className="h-[600px]">
+        <Image
+          src={"/cafe.jpg"}
+          alt={"props.title"}
+          width={200}
+          height={500}
+          className="max-lg:w-full w-full h-full object-cover"
+        />
+      </figure>
+      <div className="overlay !h-[98%]"></div>
+      <div className="absolute left-5 bottom-10 md:w-7/12 lg:w-3/12">
+        <h3 className="text-white font-semibold text-[36px]">Food & Drinks</h3>
+        <ul className="list-none md:list-disc text-white pl-4 text-lg ">
+          <li>Snacks and desserts</li>
+          <li>Pizza menu</li>
+          <li>African Dishes</li>
+        </ul>
+      </div>
+    </div>
   );
 };
 

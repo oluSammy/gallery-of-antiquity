@@ -101,9 +101,7 @@ const TabsDemo = () => (
           />
         </figure>
         <div className="absolute left-5 bottom-10 md:w-7/12 lg:w-3/12">
-          <h3 className="text-white font-semibold text-[36px]">
-            Library
-          </h3>
+          <h3 className="text-white font-semibold text-[36px]">Library</h3>
           <p className="font-extralight text-white text-sm">
             Lorem ipsum dolor sit amet, consectetur Lorem ipsum dolor sitamet,
             consectetur Lorem ipsum dolor sit amet, consectetur

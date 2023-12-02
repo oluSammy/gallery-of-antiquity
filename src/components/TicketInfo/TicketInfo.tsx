@@ -5,6 +5,7 @@ import Image from "next/image";
 import "./style.css";
 import { formatNumber } from "@/utils/formatnumber";
 import { IoIosArrowRoundForward } from "react-icons/io";
+import Link from "next/link";
 
 interface Props {
   imgSrc: string;
@@ -47,12 +48,15 @@ const TicketInfo = (props: Props) => {
               )}
             </div>
           </div>
-          <button className="bg-[#F31F2E] text-white rounded-full px-5 cursor-pointer font-semibold text-xs py-3 flex items-center ">
-            <span className="mr-2">Buy Ticket</span>
+          <Link
+            href="book-ticket"
+            className="bg-[#F31F2E] text-white rounded-full px-5 cursor-pointer font-semibold text-xs py-3 flex items-center "
+          >
+            <span className="mr-2">Book Ticket</span>
             <span className="flex h-4 w-4 rounded-full border items-center justify-center">
               <IoIosArrowRoundForward className="" />
             </span>
-          </button>
+          </Link>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 .overlay {
   position: absolute;
-  bottom: 0;
+  top: 0;
   background: rgb(2, 0, 36);
   background: linear-gradient(
     180deg,
