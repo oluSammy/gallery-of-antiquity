@@ -24,6 +24,7 @@ const DateInput = ({
       customInput={<ExampleCustomInput />}
       dateFormat="MMMM yyyy"
       showMonthYearPicker
+      minDate={new Date(Date.now())}
     />
   );
 };
