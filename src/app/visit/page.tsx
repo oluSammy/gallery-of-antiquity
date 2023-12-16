@@ -107,9 +107,18 @@ const Page = () => {
               <TicketInfo
                 imgSrc="/seniors-ticket.png"
                 price={15000}
-                title="Seniors"
+                title="Universal"
                 ageGroup="70 >"
                 link="/book-ticket"
+              />
+            </div>
+            <div className="col-span-full lg:col-span-4">
+              <TicketInfo
+                imgSrc="/seniors-ticket.png"
+                price={15000}
+                title="Ticket for Seniors"
+                ageGroup="70 >"
+                link="/book-ticket?type=seniors"
               />
             </div>
 
@@ -117,31 +126,31 @@ const Page = () => {
               <TicketInfo
                 imgSrc="/adult-ticket.png"
                 price={15000}
-                title="Adults"
-                link="/book-ticket"
+                title="Ticket for Adults"
+                link="/book-ticket?type=adults"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
               <TicketInfo
                 imgSrc="/children-ticket.png"
                 price={15000}
-                title="Children"
-                link="/book-ticket"
+                title="Ticket for Children"
+                link="/book-ticket?type=children"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
               <TicketInfo
                 imgSrc="/children-ticket.png"
                 price={5000}
-                title="child"
+                title="Ticket for students"
                 ageGroup="under 13"
-                link="/book-ticket"
+                link="/book-ticket?type=students"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
               <TicketInfo
                 imgSrc="/children-ticket.png"
-                title="groups"
+                title="Ticket for groups"
                 ageGroup="From 5 people"
                 link="/group-ticket"
               />

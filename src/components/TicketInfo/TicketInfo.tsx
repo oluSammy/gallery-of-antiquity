@@ -33,8 +33,8 @@ const TicketInfo = (props: Props) => {
       <div className="absolute bottom-2 w-full px-4 ">
         <div className="flex items-center justify-between pb-3 border-b  border-[#7B7B7B]">
           <div>
-            <p className="font-normal text-xl text-[#E5E5E5]">
-              Ticket for {props.title}
+            <p className="font-normal capitalize text-xl text-[#E5E5E5]">
+              {props.title}
             </p>
             <div>
               {props.ageGroup && (
