@@ -109,6 +109,7 @@ const Page = () => {
                 price={15000}
                 title="Seniors"
                 ageGroup="70 >"
+                link="/book-ticket"
               />
             </div>
 
@@ -117,6 +118,7 @@ const Page = () => {
                 imgSrc="/adult-ticket.png"
                 price={15000}
                 title="Adults"
+                link="/book-ticket"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
@@ -124,6 +126,7 @@ const Page = () => {
                 imgSrc="/children-ticket.png"
                 price={15000}
                 title="Children"
+                link="/book-ticket"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
@@ -132,6 +135,7 @@ const Page = () => {
                 price={5000}
                 title="child"
                 ageGroup="under 13"
+                link="/book-ticket"
               />
             </div>
             <div className="col-span-full lg:col-span-4">
@@ -139,6 +143,7 @@ const Page = () => {
                 imgSrc="/children-ticket.png"
                 title="groups"
                 ageGroup="From 5 people"
+                link="/group-ticket"
               />
             </div>
           </div>

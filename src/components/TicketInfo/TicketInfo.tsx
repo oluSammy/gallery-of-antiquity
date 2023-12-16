@@ -12,6 +12,7 @@ interface Props {
   title: string;
   ageGroup?: string;
   price?: number;
+  link: string
 }
 
 const TicketInfo = (props: Props) => {
@@ -49,7 +50,7 @@ const TicketInfo = (props: Props) => {
             </div>
           </div>
           <Link
-            href="book-ticket"
+            href={props.link}
             className="bg-[#F31F2E] text-white rounded-full px-5 cursor-pointer font-semibold text-xs py-3 flex items-center "
           >
             <span className="mr-2">Book Ticket</span>

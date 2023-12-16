@@ -5,6 +5,7 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoPauseOutline } from "react-icons/io5";
 import { CiPlay1 } from "react-icons/ci";
 import { useRef, useState } from "react";
+import Link from "next/link";
 
 const Hero = () => {
   const vidRef = useRef<HTMLVideoElement>(null);
@@ -34,12 +35,12 @@ const Hero = () => {
           with it’s diverse tribes and languages in our center.
         </p>
 
-        <button className="btn bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
+        <Link href="/visit" className="btn cursor-pointer w-fit bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
           Plan Your Visit
           <span className="ml-2">
             <IoIosArrowRoundForward />
           </span>
-        </button>
+        </Link>
 
         <button
           className="p-3 rounded-full cursor-pointer absolute max-lg:bottom-2 max-lg:right-2 lg:top-1/2 lg:left-1/2 lg:-translate-x-1/2 lg:-translate-y-1/2"

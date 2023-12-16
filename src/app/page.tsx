@@ -128,12 +128,12 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="flex justify-center pb-4">
-                  <button className="btn bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
+                  <Link href="/visit" className="btn cursor-pointer bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
                     Plan Your Visit
                     <span className="ml-2">
                       <IoIosArrowRoundForward />
                     </span>
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

@@ -15,6 +15,7 @@ import {
 import SelectTicket from "@/components/SelectTicket/SelectTicket";
 import { formatNumber } from "@/utils/formatnumber";
 import { getDate, getDay, getMonth, getYear, getTime } from "date-fns";
+import { useSearchParams } from "next/navigation";
 
 const months = [
   "January",
@@ -74,16 +75,42 @@ const facilityAccess = [
   },
 ];
 
+const ticketInfo = {
+  general: ticketPrices,
+  seniors: [ticketPrices[0]],
+  adults: [ticketPrices[1]],
+  students: [ticketPrices[2]],
+  children: [ticketPrices[3]],
+};
+
 const Page = () => {
   const [step, setStep] = useState(1); // [1, 2, 3]
   const [startDate, setStartDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
+  const params = useSearchParams();
+
+  // Get the query parameter from the URL
+  // const { type, number } = params as any;
+
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const initialValues: Record<string, { value: number; price: number }> = {};
-  [...ticketPrices, ...facilityAccess].forEach((ticket) => {
+  const facilityValues: Record<string, { value: number; price: number }> = {};
+  const type = params.get("type");
+  const number = params.get("number");
+  const defaultPrice = params.get("price");
+  const isDefault = params.get("isDefault");
+
+  const prices = ticketInfo[type as keyof typeof ticketInfo] || ticketPrices;
+
+  [...prices, ...facilityAccess].forEach((ticket) => {
     initialValues[ticket.name] = { value: 0, price: ticket.price };
   });
+
+  [...facilityAccess].forEach((ticket) => {
+    facilityValues[ticket.name] = { value: 0, price: ticket.price };
+  });
+
   const [values, setValues] =
     useState<Record<string, { value: number; price: number }>>(initialValues);
 
@@ -96,6 +123,8 @@ const Page = () => {
     [startDate]
   );
 
+  console.log(values, " values values");
+
   const offset = isSunday(daysOfTheMonth[0]) ? 0 : daysOfTheMonth[0].getDay();
   const selectDate = (date: Date) => {
     // validate date availability
@@ -104,9 +133,12 @@ const Page = () => {
     setSelectedDate(date);
   };
 
-  const totalValue = Object.values(values).reduce((prev, curr) => {
+  const total = Object.values(values).reduce((prev, curr) => {
     return prev + curr.value * curr.price;
   }, 0);
+
+  const totalValue =
+    isDefault === "true" ? total + parseInt(defaultPrice || "0") : total;
 
   return (
     <PageLayout>
@@ -204,9 +236,13 @@ const Page = () => {
             values={values}
             setValues={setValues}
             totalValue={totalValue}
+            type={type || "general"}
+            isDefault={isDefault === "true"}
+            defaultPrice={parseInt(defaultPrice || "0")}
+            defaultNumberOfTickets={parseInt(number || "0")}
           />
         )}
-        {step === 3 && (
+        {/* {step === 3 && (
           <BookingSummary
             selectedDate={selectedDate}
             setStep={setStep}
@@ -214,7 +250,7 @@ const Page = () => {
             selectedValues={values}
             totalValue={totalValue}
           />
-        )}
+        )} */}
       </div>
     </PageLayout>
   );
@@ -229,6 +265,10 @@ const SelectTimeAndTicket = ({
   values,
   setValues,
   totalValue,
+  type,
+  isDefault,
+  defaultPrice,
+  defaultNumberOfTickets,
 }: {
   selectedDate: Date;
   setSelectedDate: React.Dispatch<React.SetStateAction<Date | null>>;
@@ -240,10 +280,20 @@ const SelectTimeAndTicket = ({
     React.SetStateAction<Record<string, { value: number; price: number }>>
   >;
   totalValue: number;
+  type: string;
+  isDefault?: boolean;
+  defaultPrice: number;
+  defaultNumberOfTickets?: number;
 }) => {
+  const prices = ticketInfo[type as keyof typeof ticketInfo] || ticketPrices;
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="mt-8">
-      <div className="border-b">
+      <div className="border-b mb-8">
         <div className="flex flex-wrap items-center justify-between pb-5">
           <p className="text-[#4D4E50] font-medium mx-2 md:text-[30px]">
             {selectedDate.toLocaleString("en-US", {
@@ -286,13 +336,17 @@ const SelectTimeAndTicket = ({
         })}
       </div>
       <div className="my-2">
-        {ticketPrices.map((ticket) => {
+        {prices.map((ticket) => {
           return (
             <SelectTicket
               key={ticket.name}
               price={ticket.price}
               alias={ticket.alias}
-              value={values[ticket.name].value}
+              value={
+                defaultNumberOfTickets
+                  ? defaultNumberOfTickets
+                  : values[ticket.name].value
+              }
               setValue={(value) => {
                 setValues((prev) => ({
                   ...prev,
@@ -300,6 +354,7 @@ const SelectTimeAndTicket = ({
                 }));
               }}
               name={ticket.name}
+              active={!isDefault}
             />
           );
         })}
@@ -318,6 +373,7 @@ const SelectTimeAndTicket = ({
                 }));
               }}
               name={ticket.name}
+              active={true}
             />
           );
         })}
