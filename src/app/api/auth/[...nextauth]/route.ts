@@ -3,7 +3,7 @@ import { decode } from "jsonwebtoken";
 import NextAuth, { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-export const authOptions: AuthOptions = {
+const authOptions: AuthOptions = {
   providers: [
     Credentials({
       name: "Credentials",

@@ -3,6 +3,7 @@
 import SearchBox from "@/components/SearchBox/SearchBox";
 import Footer from "@/components/footer";
 import Navbar from "@/components/navigation/Navbar";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 
 const PageLayout = (props: Props) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const { data: session, status } = useSession();
+
   return (
     <main className={props.className}>
       <Navbar isSearchOpen={isSearchOpen} setIsSearchOpen={setIsSearchOpen} />

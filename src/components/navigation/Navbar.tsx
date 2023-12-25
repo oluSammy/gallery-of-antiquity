@@ -12,6 +12,7 @@ import Accordion from "../Accordion/Accordion";
 interface Props {
   isSearchOpen: boolean;
   setIsSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  
 }
 
 const links = [

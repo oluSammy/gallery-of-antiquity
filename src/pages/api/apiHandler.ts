@@ -4,7 +4,7 @@ import { Method } from "axios";
 import createHttpError from "http-errors";
 // import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../app/api/auth/[...nextauth]/route";
+// import { authOptions } from "../../app/api/auth/[...nextauth]/route";
 
 // import { logger } from "@/lib/logger";
 
@@ -29,7 +29,7 @@ type ApiMethodHandlers = {
 
 export function apiHandler(handler: ApiMethodHandlers, withAuth?: boolean) {
   return async (req: NextApiRequest, res: NextApiResponse<ErrorResponse>) => {
-    const session = await getServerSession(req, res, authOptions);
+    // const session = await getServerSession(req, res, authOptions);
 
     // Check if session exists, if not, return an unauthorized response
     // if (!session) {
