@@ -132,9 +132,9 @@ const Navbar = (props: Props) => {
       </ul>
 
       <ul className="ml-auto hidden tab:flex items-center ">
-        <button className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
+        <Link href="/signin" className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
           Login
-        </button>
+        </Link>
         <button className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
           Donate
         </button>
@@ -190,9 +190,9 @@ const MobileNav = ({
           className="mr-4 z-10"
         />
         <div className="ml-auto flex items-center  -mt-2 ">
-          <button className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
+          <Link href="/signin" className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
             Login
-          </button>
+          </Link>
           <button className="flex items-center text-blue-link text-lg cursor-pointer ml-2">
             <span className="mr-1">Cart</span>
             <span className="relative">

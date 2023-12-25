@@ -1,0 +1,77 @@
+.ToastViewport {
+  --viewport-padding: 25px;
+  padding: var(--viewport-padding);
+  @apply fixed bottom-0 right-0 z-[2147483647] m-0 flex w-[390px] max-w-[100vw] list-none flex-col gap-2;
+}
+
+.ToastRoot {
+  box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px,
+    hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
+  @apply flex items-center gap-6 rounded-md px-6 py-5;
+}
+
+.ToastTitle {
+  @apply mb-1 text-base font-semibold;
+}
+
+.ToastDescription {
+  @apply m-0 text-sm font-medium leading-tight;
+}
+
+.ToastClose {
+  @apply h-5 w-5;
+}
+
+.ToastRoot--info {
+  @apply bg-green-300 text-gray-300;
+}
+.ToastRoot--error {
+  @apply bg-red-500 text-gray-300;
+}
+.ToastRoot--success {
+  @apply bg-green-600 text-gray-100;
+}
+
+.ToastRoot[data-state="open"] {
+  animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ToastRoot[data-state="closed"] {
+  animation: hide 100ms ease-in;
+}
+.ToastRoot[data-swipe="move"] {
+  transform: translateX(var(--radix-toast-swipe-move-x));
+}
+.ToastRoot[data-swipe="cancel"] {
+  transform: translateX(0);
+  transition: transform 200ms ease-out;
+}
+.ToastRoot[data-swipe="end"] {
+  animation: swipeOut 100ms ease-out;
+}
+
+@keyframes hide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(calc(100% + var(--viewport-padding)));
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes swipeOut {
+  from {
+    transform: translateX(var(--radix-toast-swipe-end-x));
+  }
+  to {
+    transform: translateX(calc(100% + var(--viewport-padding)));
+  }
+}

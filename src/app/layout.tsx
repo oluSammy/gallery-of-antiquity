@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Raleway, Nunito_Sans } from "next/font/google";
+import { Raleway } from "next/font/google";
+import Providers from "../providers/Providers";
 
 const raleway = Raleway({ subsets: ["latin"] });
-// Nunito_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Daps",
@@ -17,7 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={raleway.className}>{children}</body>
+      <body className={raleway.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
