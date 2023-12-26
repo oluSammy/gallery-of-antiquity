@@ -102,7 +102,7 @@ const Page = () => {
         </div>
         <h2 className="text-center text-3xl font-bold mb-6">Welcome back!</h2>
         <div className="mb-8 relative">
-          <CiUser className="absolute top-1/2 -translate-y-1/2 left-4 " />
+          <CiUser className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1" />
           <input
             type="text"
             className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
@@ -120,7 +120,7 @@ const Page = () => {
         </div>
         <div className="mb-8 relative">
           <div className="relative">
-            <CiLock className="absolute top-1/2 -translate-y-1/2 left-4 " />
+            <CiLock className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1" />
             <input
               type={showPassword ? "text" : "password"}
               className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
@@ -159,7 +159,7 @@ const Page = () => {
                 </label>
               </div>
             </div>
-            <Link href="/reset-password" className="inline text-black ">
+            <Link href="/forgot-password" className="inline text-black ">
               Forgot password?
             </Link>
           </div>

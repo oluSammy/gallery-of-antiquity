@@ -21,7 +21,7 @@ const SearchFilter = () => {
             placeholder="Search Pictures"
           />
           <CiSearch
-            className="absolute top-1/2 -translate-y-1/2 left-4"
+            className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1"
             size="25"
           />
         </div>

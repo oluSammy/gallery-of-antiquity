@@ -96,6 +96,7 @@ const Page = () => {
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const initialValues: Record<string, { value: number; price: number }> = {};
   const facilityValues: Record<string, { value: number; price: number }> = {};
+
   const type = params?.get("type");
   const number = params?.get("number");
   const defaultPrice = params?.get("price");

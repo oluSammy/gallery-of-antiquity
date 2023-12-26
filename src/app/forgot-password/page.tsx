@@ -1,64 +1,52 @@
 "use client";
 
-import Link from "next/link";
+import React, { useState } from "react";
 import Image from "next/image";
-import { CiUser } from "react-icons/ci";
+import Link from "next/link";
+import { AiOutlineMail } from "react-icons/ai";
+import useApiClient from "@/hooks/useApiClient";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import Loader from "@/components/loader/Loader";
-import { useState } from "react";
-import useApiClient from "@/hooks/useApiClient";
-import { useQuery } from "react-query";
-import { constants } from "@/constants/constants";
 import { useAppDispatch } from "@/redux/hooks";
 import { openNotificationWithMessage } from "@/redux/Notification";
 import { useRouter } from "next/navigation";
-
-const initialValues = {
-  email: "",
-};
 
 const schema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
 });
 
+const initialValues = {
+  email: "",
+};
+
 const Page = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const apiCLient = useApiClient();
 
+  const apiClient = useApiClient();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const {
-    handleBlur,
-    handleChange,
-    errors,
-    touched,
-    values,
-    handleSubmit,
-    isValid,
-  } = useFormik({
+  const { errors, values, handleChange, handleSubmit, handleBlur } = useFormik({
     initialValues,
     validationSchema: schema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      console.log({ values });
-
       try {
-        const response = await apiCLient.get(
-          constants.GET_EMAIL_VERIFICATION(values.email)
-        );
-        setIsLoading(false);
-        router.push("/signin");
+        const response = await apiClient.post("/forgot-password", {
+          email: values.email,
+        });
+
+        console.log({ response });
         dispatch(
           openNotificationWithMessage({
             type: "success",
-            title: "Done",
-            description: `Verification link sent to ${values.email}`,
+            title: "Email Sent",
+            description: response.data.message,
           })
         );
+        router.push("/");
       } catch (error: any) {
-        setIsLoading(false);
-        console.log(error.response.data.errorMessage.message);
         dispatch(
           openNotificationWithMessage({
             type: "error",
@@ -67,20 +55,20 @@ const Page = () => {
           })
         );
       }
+      setIsLoading(false);
     },
   });
 
-  const dispatch = useAppDispatch();
-
-  const getEmail = () => {
-    console.log({ isValid });
+  const handleClick = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
     handleSubmit();
+    // console.log('Email: ', email);
   };
 
   return (
-    <div className="flex items-center justify-center py-14">
-      <div className=" w-full px-10 md:w-[70vw] lg:w-[35vw]">
-        <div className="flex justify-center mb-16">
+    <div className="flex items-center justify-center py-10">
+      <form className=" w-full px-10 md:w-[70vw] lg:w-[35vw]">
+        <div className="flex justify-center mb-24">
           <Link href="/">
             <Image
               src="/daps.png"
@@ -92,38 +80,35 @@ const Page = () => {
           </Link>
         </div>
         <h2 className="text-center text-3xl font-bold mb-6">
-          Get Email Verification!
+          Forgot Password?
         </h2>
         <div className="mb-8 relative">
-          <CiUser className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1" />
+          <AiOutlineMail className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1" />
           <input
             type="text"
+            name="email"
+            id="email"
             className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
             placeholder="Email"
-            id="email"
-            name="email"
-            onChange={handleChange}
             onBlur={handleBlur}
+            onChange={handleChange}
             value={values.email}
           />
           <div className="h-2">
             <p className="text-xs text-red-500">
-              {touched.email && errors.email ? errors.email : ""}
+              {errors.email ? errors.email : ""}
             </p>
           </div>
         </div>
+
         <button
-          onClick={getEmail}
           type="submit"
           className="block bg-[#FA0303] text-center w-full rounded-md text-white py-3 font-medium text-base mb-4"
+          onClick={handleClick}
         >
-          {isLoading ? (
-            <Loader height={23} width={20} />
-          ) : (
-            "Get Verification Email"
-          )}
+          {isLoading ? <Loader height={23} width={20} /> : "Submit"}
         </button>
-      </div>
+      </form>
     </div>
   );
 };

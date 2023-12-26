@@ -32,7 +32,7 @@ const signUpSchema = Yup.object().shape({
   ),
 });
 
-const iconClassName = "absolute top-1/2 -translate-y-1/2 left-4 ";
+const iconClassName = "absolute top-1/2 -translate-y-1/2 left-4 -mt-1";
 
 const icons = {
   firstName: <CiUser className={iconClassName} />,

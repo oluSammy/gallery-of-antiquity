@@ -8,12 +8,30 @@ import { IoMenuOutline } from "react-icons/io5";
 import { IoIosClose } from "react-icons/io";
 import Link from "next/link";
 import Accordion from "../Accordion/Accordion";
+import { useSession, signOut } from "next-auth/react";
 
 interface Props {
   isSearchOpen: boolean;
   setIsSearchOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  
 }
+
+const userDropDown = [
+  {
+    label: "Profile",
+    link: "/profile",
+    type: "link",
+  },
+  {
+    label: "Change Password",
+    link: "/change-password",
+    type: "link",
+  },
+  {
+    label: "Logout",
+    link: "/logout",
+    type: "button",
+  },
+];
 
 const links = [
   {
@@ -80,6 +98,9 @@ const links = [
 
 const Navbar = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: session } = useSession();
+
+  console.log({ session });
 
   if (isMenuOpen) {
     return (
@@ -133,9 +154,14 @@ const Navbar = (props: Props) => {
       </ul>
 
       <ul className="ml-auto hidden tab:flex items-center ">
-        <Link href="/signin" className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
-          Login
-        </Link>
+        {!session && (
+          <Link
+            href="/signin"
+            className="text-blue-link font-normal text-lg mr-3 cursor-pointer"
+          >
+            Login
+          </Link>
+        )}
         <button className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
           Donate
         </button>
@@ -148,7 +174,7 @@ const Navbar = (props: Props) => {
             Search
           </span>
         </button>
-        <button className="flex items-center text-blue-link text-lg cursor-pointer">
+        <button className="flex items-center text-blue-link text-lg cursor-pointer mr-4">
           <span className="mr-1">Cart</span>
           <span className="relative">
             <HiOutlineShoppingBag size="20" />
@@ -157,6 +183,46 @@ const Navbar = (props: Props) => {
             </span>
           </span>
         </button>
+        {session && (
+          <Dropdown
+            DropdownTrigger={
+              <span className="text-[18px] font-normal text-blue-link hover:text-[#EB0B0B] flex items-center ">
+                <div className="h-8 w-8 rounded-full bg-[#EB0B0B] flex justify-center items-center">
+                  <p className="text-[10px] font-bold text-white">
+                    {session?.user?.data.firstName?.charAt(0).toUpperCase()}{" "}
+                    {session?.user?.data.lastName?.charAt(0).toUpperCase()}
+                  </p>
+                </div>
+                <span className="ml-0.5">
+                  <MdOutlineArrowDropDown size={22} />
+                </span>
+              </span>
+            }
+            DropdownContent={
+              <ul className="flex flex-col ">
+                {userDropDown.map((item) =>
+                  item.type === "button" ? (
+                    <button
+                      onClick={() => signOut()}
+                      key={item.label}
+                      className="px-6 py-1.5 w-full text-sm capitalize hover:bg-gray-50 "
+                    >
+                      {item.label}
+                    </button>
+                  ) : (
+                    <Link
+                      href={`/${item.link}`}
+                      key={item.label}
+                      className="px-6 py-1.5 w-full text-sm capitalize hover:bg-gray-50 "
+                    >
+                      {item.label}
+                    </Link>
+                  )
+                )}
+              </ul>
+            }
+          />
+        )}
       </ul>
       <button
         className="tab:hidden block ml-auto cursor-pointer"
@@ -180,6 +246,8 @@ const MobileNav = ({
   setIsSearchOpen: Dispatch<SetStateAction<boolean>>;
   isSearchOpen: boolean;
 }) => {
+  const { data: session } = useSession();
+
   return (
     <div className="h-screen fixed overflow-y-scroll bg-white w-full z-50 pt-10 p-2 px-3">
       <div className="flex items-center mb-4">
@@ -191,9 +259,14 @@ const MobileNav = ({
           className="mr-4 z-10"
         />
         <div className="ml-auto flex items-center  -mt-2 ">
-          <Link href="/signin" className="text-blue-link font-normal text-lg mr-3 cursor-pointer">
-            Login
-          </Link>
+          {!session && (
+            <Link
+              href="/signin"
+              className="text-blue-link font-normal text-lg mr-3 cursor-pointer"
+            >
+              Login
+            </Link>
+          )}
           <button className="flex items-center text-blue-link text-lg cursor-pointer ml-2">
             <span className="mr-1">Cart</span>
             <span className="relative">

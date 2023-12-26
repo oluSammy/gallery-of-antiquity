@@ -52,6 +52,30 @@ class Authentication {
 
     return res;
   }
+
+  async forgotPassword(email: string) {
+    const res = await callApi({
+      apiPath: `auth/forgot-password`,
+      method: "POST",
+      body: { email },
+    });
+
+    return res;
+  }
+
+  async resetPassword(
+    password: string,
+    passwordConfirm: string,
+    token: string
+  ) {
+    const res = await callApi({
+      apiPath: `auth/reset-password/${token}`,
+      method: "POST",
+      body: { password, passwordConfirm },
+    });
+
+    return res;
+  }
 }
 
 export default Authentication;

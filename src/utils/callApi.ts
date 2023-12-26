@@ -82,7 +82,8 @@ export async function callApi<T>({
     }
   }
 
-  // console.log("!!", axios.getUri(requestParams))
+  console.log("!!", axios.getUri(requestParams));
+  console.log("!! data", requestParams.data);
   return axios(requestParams)
     .then((result) => result.data)
     .catch((err: AxiosError) => {

@@ -4,6 +4,7 @@ import NextAuth, { AuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 const authOptions: AuthOptions = {
+  secret: process.env.AUTH_SECRET || "secret",
   providers: [
     Credentials({
       name: "Credentials",
@@ -38,7 +39,6 @@ const authOptions: AuthOptions = {
       if (session && session.user) {
         try {
           const { exp } = decode(session.user.accessToken) as any;
-          console.log({ exp, accessToken: session.user.accessToken });
 
           if (exp < (new Date().getTime() + 1) / 1000) {
             return null;

@@ -6,4 +6,5 @@ export const constants = {
   SIGN_IN: "/auth/login",
   SIGN_UP: "/signup",
   GET_EMAIL_VERIFICATION: (email: string) => `/verification/${email}`,
+  RESET_PASSWORD: (token: string) => `/reset-password/${token}`,
 };

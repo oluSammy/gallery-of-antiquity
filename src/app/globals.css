@@ -28,3 +28,19 @@ html {
   height: 3px;
   width: 20%;
 }
+
+.fadeinout {
+  animation: fadeinout 1.3s infinite;
+}
+
+@keyframes fadeinout {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
