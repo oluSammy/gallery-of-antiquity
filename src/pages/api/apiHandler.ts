@@ -3,6 +3,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { Method } from "axios";
 import createHttpError from "http-errors";
 // import jwt from "jsonwebtoken";
+import { auth, authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 // import { authOptions } from "../../app/api/auth/[...nextauth]/route";
 
@@ -32,40 +33,23 @@ export function apiHandler(handler: ApiMethodHandlers, withAuth?: boolean) {
     // const session = await getServerSession(req, res, authOptions);
 
     // Check if session exists, if not, return an unauthorized response
-    // if (!session) {
-    //   //   logger.error("Unauthorized request: " + JSON.stringify(req.headers));
-    //   return res.status(401).json({
-    //     message: "Unauthorized",
-    //   });
-    // }
+    // const session = await auth();
+    // console.log("sessionsino...", session);
+    const session = await getServerSession(req, res, authOptions);
 
-    // if (withAuth) {
-    //   const userAddress = req.cookies.user_address;
-    //   const token = req.cookies[`token_${userAddress}`];
+    console.log(
+      {
+        session,
+      },
+      "SERVER SESSION"
+    );
 
-    //   if (!token) {
-    //     return res.status(401).end("Unauthorized");
-    //   }
-
-    //   try {
-    //     // Validate token
-    //     // const decoded = jwt.verify(token, "your-secret-key")
-    //     const decoded = jwt.decode(token);
-    //     console.log("===================================");
-    //     console.log(decoded);
-    //     console.log("===================================");
-
-    //     // You can set the user info to the req object
-    //     // @ts-ignore
-    //     req.user = decoded;
-
-    //     // Continue to route handler
-    //     // return handler(req, res)
-    //   } catch (err) {
-    //     console.error(err);
-    //     return res.status(401).end("Unauthorized");
-    //   }
-    // }
+    if (!session && withAuth) {
+      //   logger.error("Unauthorized request: " + JSON.stringify(req.headers));
+      return res.status(401).json({
+        message: "Unauthorized",
+      });
+    }
 
     // Cors
     const origin = req.headers.origin;

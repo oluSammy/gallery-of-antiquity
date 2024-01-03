@@ -4,12 +4,27 @@ import "./hero.css";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { IoPauseOutline } from "react-icons/io5";
 import { CiPlay1 } from "react-icons/ci";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { signOut } from "next-auth/react";
+import { useSearchParams, useRouter } from "next/navigation";
 
 const Hero = () => {
   const vidRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  const params = useSearchParams();
+  const type = params?.get("status");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (type === "signout") {
+      signOut({
+        redirect: true,
+      });
+      router.push("/");
+    }
+  }, []);
 
   const handlePlay = () => {
     vidRef.current?.play();
@@ -23,7 +38,10 @@ const Hero = () => {
   return (
     <div className="hero">
       <video autoPlay loop muted playsInline ref={vidRef} className="bg-video">
-        <source src="https://res.cloudinary.com/olumorinsamuel/video/upload/v1700597392/musuem_rlvudt.mp4" type="video/mp4" />
+        <source
+          src="https://res.cloudinary.com/olumorinsamuel/video/upload/v1700597392/musuem_rlvudt.mp4"
+          type="video/mp4"
+        />
       </video>
       <div className="overlay group">
         <h1 className="text-white lg:text-left text-center font-bold text-4xl lg:text-[51px] lg:leading-[52px] ">
@@ -35,7 +53,10 @@ const Hero = () => {
           with it’s diverse tribes and languages in our center.
         </p>
 
-        <Link href="/visit" className="btn cursor-pointer w-fit bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full ">
+        <Link
+          href="/visit"
+          className="btn cursor-pointer w-fit bg-[#EB0B0B] text-xl font-bold px-8 py-4 mt-3 text-white flex items-center rounded-full "
+        >
           Plan Your Visit
           <span className="ml-2">
             <IoIosArrowRoundForward />

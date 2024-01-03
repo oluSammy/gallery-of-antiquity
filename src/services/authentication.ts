@@ -76,6 +76,39 @@ class Authentication {
 
     return res;
   }
+
+  async changePassword(
+    password: string,
+    previousPassword: string,
+    passwordConfirm: string,
+    email: string,
+    apiKey: string
+  ) {
+    console.log(
+      {
+        password,
+        previousPassword,
+        passwordConfirm,
+        email,
+        apiKey,
+      },
+      "unprecedented"
+    );
+
+    const res = await callApi({
+      apiPath: `auth/change-password`,
+      method: "POST",
+      body: {
+        email,
+        previousPassword,
+        newPassword: password,
+        passwordConfirm: passwordConfirm,
+      },
+      apiKey,
+    });
+
+    return res;
+  }
 }
 
 export default Authentication;

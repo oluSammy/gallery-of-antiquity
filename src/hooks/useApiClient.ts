@@ -4,14 +4,20 @@ import qs from "qs";
 // import { openNotificationWithMessage } from "@/redux/Notification";
 
 import { constants } from "@/constants/constants";
+import { useSession } from "next-auth/react";
 
 const useApiClient = () => {
   const baseUrl = constants.API_BASE_URL;
+
+  const { data: session } = useSession();
+
+  console.log("session", session);
 
   const apiClient = axios.create({
     baseURL: baseUrl,
     headers: {
       "Content-Type": "application/json",
+      Authorization: session ? `Bearer ${session.user.accessToken}` : "",
     },
     paramsSerializer: (params) => {
       return qs.stringify(params, { arrayFormat: "repeat", skipNulls: true });

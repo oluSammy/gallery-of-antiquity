@@ -1,9 +1,14 @@
 import Authentication from "@/services/authentication";
 import { decode } from "jsonwebtoken";
-import NextAuth, { AuthOptions } from "next-auth";
+import {
+  GetServerSidePropsContext,
+  NextApiRequest,
+  NextApiResponse,
+} from "next";
+import NextAuth, { AuthOptions, getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const authOptions: AuthOptions = {
+export const authOptions: AuthOptions = {
   secret: process.env.AUTH_SECRET || "secret",
   providers: [
     Credentials({
@@ -59,6 +64,15 @@ const authOptions: AuthOptions = {
     },
   },
 };
+
+export function auth(
+  ...args:
+    | [GetServerSidePropsContext["req"], GetServerSidePropsContext["res"]]
+    | [NextApiRequest, NextApiResponse]
+    | []
+) {
+  return getServerSession(...args, authOptions);
+}
 
 const handler = NextAuth(authOptions);
 

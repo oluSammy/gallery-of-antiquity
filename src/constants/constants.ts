@@ -7,4 +7,5 @@ export const constants = {
   SIGN_UP: "/signup",
   GET_EMAIL_VERIFICATION: (email: string) => `/verification/${email}`,
   RESET_PASSWORD: (token: string) => `/reset-password/${token}`,
+  CHANGE_PASSWORD: "/change-password",
 };

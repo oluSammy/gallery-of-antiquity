@@ -11,6 +11,7 @@ declare module "next-auth" {
         isActive: boolean;
         id: string;
       };
+      accessToken: string;
     };
   }
 }

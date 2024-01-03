@@ -39,18 +39,16 @@ export async function callApi<T>({
 
   console.log({
     apiBaseUrl,
+    apiKey,
   });
 
   const url = apiPath.startsWith("http")
     ? apiPath
     : new nodeUrl.URL(`${apiBaseUrl}/${apiPath}`).href;
 
-  console.log(url, "--->");
-
   const requestParams: AxiosRequestConfig = {
     headers: {
       "Accept-Encoding": "gzip, deflate, br",
-      authorizationToken: process.env.API_KEY,
     },
     url,
     method: method as Method,
@@ -60,13 +58,13 @@ export async function callApi<T>({
     },
   };
 
-  if (authToken) {
-    requestParams.headers!.Authorization = `Bearer ${authToken}`;
+  if (apiKey) {
+    requestParams.headers!.authorization = `Bearer ${apiKey}`;
   }
 
-  if (apiKey) {
-    requestParams.headers!.ApiKey = apiKey;
-  }
+  console.log({
+    headers: requestParams.headers,
+  }, "safe place");
 
   if (body) {
     if (method === "POST" || method === "DELETE") {
@@ -82,12 +80,12 @@ export async function callApi<T>({
     }
   }
 
-  console.log("!!", axios.getUri(requestParams));
-  console.log("!! data", requestParams.data);
+  // console.log("!!", axios.getUri(requestParams));
+  // console.log("!! data", requestParams.data);
   return axios(requestParams)
     .then((result) => result.data)
     .catch((err: AxiosError) => {
-      console.log(err.response, "errors..");
+      console.log(err.response?.data, "errors..");
       const data = err.response?.data;
       const errorInfo: any = {
         statusCode: err.response ? err.response.status : 0,

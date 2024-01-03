@@ -211,7 +211,7 @@ const Navbar = (props: Props) => {
                     </button>
                   ) : (
                     <Link
-                      href={`/${item.link}`}
+                      href={`${item.link}`}
                       key={item.label}
                       className="px-6 py-1.5 w-full text-sm capitalize hover:bg-gray-50 "
                     >
