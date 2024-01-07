@@ -46,48 +46,49 @@ const Page = () => {
   const dispatch = useAppDispatch();
   const router = useRouter();
 
-  const { values, handleChange, errors, handleBlur, handleSubmit } = useFormik({
-    initialValues,
-    onSubmit: async (values) => {
-      try {
-        setIsLoading(true);
+  const { values, handleChange, errors, handleBlur, handleSubmit, touched } =
+    useFormik({
+      initialValues,
+      onSubmit: async (values) => {
+        try {
+          setIsLoading(true);
 
-        const response = await apiClient.post(constants.CHANGE_PASSWORD, {
-          previousPassword: values.prevPassword,
-          password: values.password,
-          passwordConfirm: values.confirmPassword,
-          email: session?.user.data.email,
-        });
+          const response = await apiClient.post(constants.CHANGE_PASSWORD, {
+            previousPassword: values.prevPassword,
+            password: values.password,
+            passwordConfirm: values.confirmPassword,
+            email: session?.user.data.email,
+          });
 
-        console.log({ response });
+          console.log({ response });
 
-        setIsLoading(false);
-        // router.push("/?status=signout");
-        // signOut();
-        signOut({ redirect: false }).then(() => {
-          router.push("/signin"); // Redirect to the dashboard page after signing out
-        });
-        dispatch(
-          openNotificationWithMessage({
-            type: "success",
-            title: "Done",
-            description: "Password changed Successfully",
-          })
-        );
-      } catch (error: any) {
-        setIsLoading(false);
-        console.log({ error: error.response.data.errorMessage.message });
-        dispatch(
-          openNotificationWithMessage({
-            type: "error",
-            title: "Password update Error",
-            description: error.response.data.errorMessage.message,
-          })
-        );
-      }
-    },
-    validationSchema: schema,
-  });
+          setIsLoading(false);
+          // router.push("/?status=signout");
+          // signOut();
+          signOut({ redirect: false }).then(() => {
+            router.push("/signin"); // Redirect to the dashboard page after signing out
+          });
+          dispatch(
+            openNotificationWithMessage({
+              type: "success",
+              title: "Done",
+              description: "Password changed Successfully",
+            })
+          );
+        } catch (error: any) {
+          setIsLoading(false);
+          console.log({ error: error.response.data.errorMessage.message });
+          dispatch(
+            openNotificationWithMessage({
+              type: "error",
+              title: "Password update Error",
+              description: error.response.data.errorMessage.message,
+            })
+          );
+        }
+      },
+      validationSchema: schema,
+    });
 
   const reset = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -100,7 +101,7 @@ const Page = () => {
 
   return (
     <div className="flex items-center justify-center py-10">
-      <form className=" w-full px-10 md:w-[70vw] lg:w-[35vw]">
+      <form onSubmit={reset} className=" w-full px-10 md:w-[70vw] lg:w-[35vw]">
         <div className="flex justify-center mb-24">
           <Link href="/">
             <Image
@@ -123,10 +124,10 @@ const Page = () => {
             className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
             placeholder="Previous Password"
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={handleBlur("prevPassword")}
             value={values.prevPassword}
           />
-          <button
+          <div
             className="absolute top-1/2 -translate-y-1/2 right-4 "
             onClick={() =>
               setShowPassword({
@@ -136,10 +137,12 @@ const Page = () => {
             }
           >
             {showPassword.prevPassword ? <IoEyeOff /> : <IoEye />}
-          </button>
+          </div>
           <div className="h-2">
             <p className="text-xs text-red-500">
-              {errors.prevPassword ? errors.prevPassword : ""}
+              {touched.prevPassword && errors.prevPassword
+                ? errors.prevPassword
+                : ""}
             </p>
           </div>
         </div>
@@ -153,10 +156,10 @@ const Page = () => {
             className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
             placeholder="New Password"
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={handleBlur("password")}
             value={values.password}
           />
-          <button
+          <div
             className="absolute top-1/2 -translate-y-1/2 right-4 "
             onClick={() =>
               setShowPassword({
@@ -166,10 +169,10 @@ const Page = () => {
             }
           >
             {showPassword.password ? <IoEyeOff /> : <IoEye />}
-          </button>
+          </div>
           <div className="h-2">
             <p className="text-xs text-red-500">
-              {errors.password ? errors.password : ""}
+              {touched.password && errors.password ? errors.password : ""}
             </p>
           </div>
         </div>
@@ -182,10 +185,10 @@ const Page = () => {
             className="w-full px-10 py-3  border-[0.5px] border-[#565353] rounded-md"
             placeholder="Confirm Password"
             onChange={handleChange}
-            onBlur={handleBlur}
+            onBlur={handleBlur("confirmPassword")}
             value={values.confirmPassword}
           />
-          <button
+          <div
             className="absolute top-1/2 -translate-y-1/2 right-4 "
             onClick={() =>
               setShowPassword({
@@ -195,10 +198,12 @@ const Page = () => {
             }
           >
             {showPassword.confirmPassword ? <IoEyeOff /> : <IoEye />}
-          </button>
+          </div>
           <div className="h-2">
             <p className="text-xs text-red-500">
-              {errors.confirmPassword ? errors.confirmPassword : ""}
+              {touched.confirmPassword && errors.confirmPassword
+                ? errors.confirmPassword
+                : ""}
             </p>
           </div>
         </div>

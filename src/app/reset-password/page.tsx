@@ -127,7 +127,7 @@ const Page = () => {
             onBlur={handleBlur}
             value={values.password}
           />
-          <button
+          <div
             className="absolute top-1/2 -translate-y-1/2 right-4 "
             onClick={() =>
               setShowPassword({
@@ -137,7 +137,7 @@ const Page = () => {
             }
           >
             {showPassword.password ? <IoEyeOff /> : <IoEye />}
-          </button>
+          </div>
           <div className="h-2">
             <p className="text-xs text-red-500">
               {errors.password ? errors.password : ""}

@@ -32,7 +32,7 @@ const signUpSchema = Yup.object().shape({
   ),
 });
 
-const iconClassName = "absolute top-1/2 -translate-y-1/2 left-4 -mt-1";
+const iconClassName = "absolute top-1/2 -translate-y-1/2 left-4";
 
 const icons = {
   firstName: <CiUser className={iconClassName} />,
@@ -153,7 +153,7 @@ const Page = () => {
                 onBlur={handleBlur(key)}
               />
               {key === "confirmPassword" || key === "password" ? (
-                <button
+                <div
                   className="absolute top-1/2 -translate-y-1/2 right-4 "
                   onClick={() =>
                     setShowPassword({
@@ -163,7 +163,7 @@ const Page = () => {
                   }
                 >
                   {showPassword[key] ? <IoEyeOff /> : <IoEye />}
-                </button>
+                </div>
               ) : (
                 ""
               )}

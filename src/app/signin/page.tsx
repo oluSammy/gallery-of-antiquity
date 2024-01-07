@@ -30,45 +30,46 @@ const Page = () => {
 
   const dispatch = useAppDispatch();
 
-  const { errors, values, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    validationSchema: loginSchema,
-    onSubmit: (values) => {
-      console.log(values);
-      setIsLoading(true);
-      signIn("credentials", {
-        redirect: false,
-        email: values.email,
-        password: values.password,
-      }).then((response) => {
-        if (
-          response?.status.toString().startsWith("4") ||
-          response?.status.toString().startsWith("5")
-        ) {
+  const { errors, values, handleChange, handleSubmit, handleBlur, touched } =
+    useFormik({
+      initialValues,
+      validationSchema: loginSchema,
+      onSubmit: (values) => {
+        console.log(values);
+        setIsLoading(true);
+        signIn("credentials", {
+          redirect: false,
+          email: values.email,
+          password: values.password,
+        }).then((response) => {
+          if (
+            response?.status.toString().startsWith("4") ||
+            response?.status.toString().startsWith("5")
+          ) {
+            dispatch(
+              openNotificationWithMessage({
+                type: "error",
+                title: "Error Signing In",
+                description:
+                  response?.error !== "undefined"
+                    ? response?.error || "Invalid Login Credentials"
+                    : "Invalid Login Credentials",
+              })
+            );
+            setIsLoading(false);
+            return;
+          }
+          setIsLoading(false);
           dispatch(
             openNotificationWithMessage({
-              type: "error",
-              title: "Error Signing In",
-              description:
-                response?.error !== "undefined"
-                  ? response?.error || "Invalid Login Credentials"
-                  : "Invalid Login Credentials",
+              type: "success",
+              title: "Login Successful",
+              description: "",
             })
           );
-          setIsLoading(false);
-          return;
-        }
-        setIsLoading(false);
-        dispatch(
-          openNotificationWithMessage({
-            type: "success",
-            title: "Login Successful",
-            description: "",
-          })
-        );
-      });
-    },
-  });
+        });
+      },
+    });
 
   const handleSignIn = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -78,8 +79,6 @@ const Page = () => {
 
   const router = useRouter();
 
-  console.log(session);
-
   useEffect(() => {
     if (status === "authenticated" && session && session.user) {
       router.push("/");
@@ -88,7 +87,10 @@ const Page = () => {
 
   return (
     <div className="flex items-center justify-center py-14">
-      <div className=" w-full px-10 md:w-[70vw] lg:w-[35vw]">
+      <form
+        onSubmit={handleSignIn}
+        className=" w-full px-10 md:w-[70vw] lg:w-[35vw]"
+      >
         <div className="flex justify-center mb-16">
           <Link href="/">
             <Image
@@ -111,10 +113,11 @@ const Page = () => {
             name="email"
             onChange={handleChange}
             value={values.email}
+            onBlur={handleBlur("email")}
           />
           <div className="h-2">
             <p className="text-xs text-red-500">
-              {errors.email ? errors.email : ""}
+              {touched.email && errors.email ? errors.email : ""}
             </p>
           </div>
         </div>
@@ -129,16 +132,17 @@ const Page = () => {
               value={values.password}
               id="password"
               name="password"
+              onBlur={handleBlur("password")}
             />
-            <button
+            <div
               className="absolute top-1/2 -translate-y-1/2 right-4 "
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? <IoEyeOff /> : <IoEye />}
-            </button>
+            </div>
             <div className="h-2">
               <p className="text-xs text-red-500">
-                {errors.password ? errors.password : ""}
+                {touched.password && errors.password ? errors.password : ""}
               </p>
             </div>
           </div>
@@ -165,6 +169,7 @@ const Page = () => {
           </div>
         </div>
         <button
+          type="submit"
           onClick={handleSignIn}
           className="block bg-[#FA0303] text-center w-full rounded-md text-white py-3 font-medium text-base mb-4"
         >
@@ -181,7 +186,7 @@ const Page = () => {
             Get verification Email
           </Link>
         </div>
-      </div>
+      </form>
     </div>
   );
 };
