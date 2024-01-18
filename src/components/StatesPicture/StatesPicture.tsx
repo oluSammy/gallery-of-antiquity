@@ -8,7 +8,7 @@ interface Props {
 
 const StatesPicture = (props: Props) => {
   return (
-    <div className="relative lg:w-fit w-full ">
+    <div className="relative lg:w-fit w-full mt-8">
       <figure className="w-full h-52 ">
         <Image
           src={props.imgSrc}

@@ -1,3 +1,5 @@
+"use client";
+
 import GalleryPicture from "@/components/GalleryPicture/GalleryPicture";
 import SearchFilter from "@/components/SearchFilter/SearchFilter";
 import PageLayout from "@/containers/PageLayout";
@@ -12,7 +14,33 @@ const page = () => {
           Pictures{" "}
         </h1>
 
-        <SearchFilter />
+        <SearchFilter
+          searchPlaceholder="Search Pictures"
+          categories={[
+            {
+              active: true,
+              label: "Nature",
+              value: "nature",
+              onClick: () => {},
+            },
+            {
+              label: "Forests",
+              value: "forest",
+              onClick: () => {},
+            },
+            {
+              label: "Cities",
+              value: "city",
+              onClick: () => {},
+            },
+            {
+              label: "Buildings",
+              value: "building",
+              onClick: () => {},
+            },
+          ]}
+          showFilter={false}
+        />
         <div className="grid grid-cols-12 gap-x-4 mt-20">
           <div className="col-span-full lg:col-span-4 xl:col-span-3 px-2 mb-4 lg:px-0">
             <GalleryPicture

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { StatusCodes } from "http-status-codes";
 import Authentication from "@/services/authentication";
 import { apiHandler } from "../apiHandler";
-import { auth } from "@/app/api/auth/[...nextauth]/route";
+import { auth } from "@/auth/auth";
 
 async function changePassword(req: NextApiRequest, res: NextApiResponse) {
   const AuthService = new Authentication();

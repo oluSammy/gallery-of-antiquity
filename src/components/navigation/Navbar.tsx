@@ -1,3 +1,5 @@
+// "use client";
+
 import React, { Dispatch, SetStateAction, useState } from "react";
 import Image from "next/image";
 import Dropdown from "../Dropdown/Dropdown";
@@ -54,12 +56,12 @@ const links = [
         link: "visit",
         label: "Plan Your Visit",
       },
+      // {
+      //   link: "tickets",
+      //   label: "Book Tickets",
+      // },
       {
-        link: "tickets",
-        label: "Book Tickets",
-      },
-      {
-        link: "group-visit",
+        link: "group-ticket",
         label: "Group Visit",
       },
     ],
@@ -68,7 +70,7 @@ const links = [
     label: "Learn",
     dropdown: [
       {
-        link: "History of States",
+        link: "history",
         label: "history",
       },
       {

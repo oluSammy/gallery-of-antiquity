@@ -3,8 +3,9 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { Method } from "axios";
 import createHttpError from "http-errors";
 // import jwt from "jsonwebtoken";
-import { auth, authOptions } from "@/app/api/auth/[...nextauth]/route";
+
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/auth/auth";
 // import { authOptions } from "../../app/api/auth/[...nextauth]/route";
 
 // import { logger } from "@/lib/logger";

@@ -3,16 +3,20 @@ import React from "react";
 import StatesPicture from "../StatesPicture/StatesPicture";
 import { IoIosArrowForward } from "react-icons/io";
 
-const HistorySection = () => {
+type Props = {
+  title?: string;
+};
+
+const HistorySection = ({ title = "History of the states" }: Props) => {
   return (
     <section className="my-8">
       <div className="container mx-auto">
         <div className="flex mb-8 justify-between items-center px-4">
           <h2 className="text-[#363636] font-semibold text-4xl relative border-w py-2 ">
-            History of the states
+            {title}
           </h2>
           <Link
-            href="/gallery"
+            href="/history/all"
             className="text-[#FF4250] underline flex items-center justify-center"
           >
             <span>See More</span>

@@ -10,7 +10,20 @@ import SliderDemo from "../Slider/Slider";
 
 const sortValues = ["Latest", "Old", "High Price", "New Price"];
 
-const SearchFilter = () => {
+type CategoryOption = {
+  label: string;
+  value: string;
+  onClick: () => void;
+  active?: boolean;
+};
+
+type Props = {
+  searchPlaceholder: string;
+  showFilter?: boolean;
+  categories?: CategoryOption[];
+};
+
+const SearchFilter = (props: Props) => {
   return (
     <div>
       <div className="flex lg:flex-row flex-col lg:items-center lg:justify-between">
@@ -21,76 +34,78 @@ const SearchFilter = () => {
             placeholder="Search Pictures"
           />
           <CiSearch
-            className="absolute top-1/2 -translate-y-1/2 left-4 -mt-1"
+            className="absolute top-1/2 -translate-y-1/2 left-4 "
             size="25"
           />
         </div>
         <div className="flex items-center">
-          <div className="mr-4">
-            <Dropdown
-              DropdownTrigger={
-                <button className="text-[18px] font-normal bg-[#F6F6F6] p-2 px-4 flex items-center rounded-md">
-                  Filter & Sort
-                  <span className="ml-4">
-                    <IoFilterOutline size={25} />
-                  </span>
-                </button>
-              }
-              DropdownContent={
-                <ul className="flex flex-col pt-4 ">
-                  <Accordion
-                    classNames={{
-                      trigger: "mb-5",
-                      wrapper: "px-5",
-                    }}
-                    items={[
-                      {
-                        title: (
-                          <button className="hover:bg-gray-300 font-bold text-base">
-                            Sort
-                          </button>
-                        ),
-                        content: sortValues.map((value) => (
-                          <button
-                            key={value}
-                            className="mb-2 px-0.5 cursor-pointer flex justify-between items-center text-[#25213B] text-base font-normal w-full hover:bg-gray-100 py-1 "
-                          >
-                            <span>{value}</span>
-                            <input
-                              className="mr-1.5"
-                              id="sort"
-                              name="sort"
-                              type="radio"
-                            />
-                          </button>
-                        )),
-                        value: "#232323",
-                      },
-                    ]}
-                    type="single"
-                  />
-                  <Accordion
-                    classNames={{
-                      trigger: "mb-5",
-                      wrapper: "px-5",
-                    }}
-                    items={[
-                      {
-                        title: (
-                          <button className="hover:bg-gray-300 font-bold text-base">
-                            Price
-                          </button>
-                        ),
-                        content: <PriceRange />,
-                        value: "#232323",
-                      },
-                    ]}
-                    type="single"
-                  />
-                </ul>
-              }
-            />
-          </div>
+          {props.showFilter && (
+            <div className="mr-4">
+              <Dropdown
+                DropdownTrigger={
+                  <button className="text-[18px] font-normal bg-[#F6F6F6] p-2 px-4 flex items-center rounded-md">
+                    Filter & Sort
+                    <span className="ml-4">
+                      <IoFilterOutline size={25} />
+                    </span>
+                  </button>
+                }
+                DropdownContent={
+                  <ul className="flex flex-col pt-4 ">
+                    <Accordion
+                      classNames={{
+                        trigger: "mb-5",
+                        wrapper: "px-5",
+                      }}
+                      items={[
+                        {
+                          title: (
+                            <button className="hover:bg-gray-300 font-bold text-base">
+                              Sort
+                            </button>
+                          ),
+                          content: sortValues.map((value) => (
+                            <button
+                              key={value}
+                              className="mb-2 px-0.5 cursor-pointer flex justify-between items-center text-[#25213B] text-base font-normal w-full hover:bg-gray-100 py-1 "
+                            >
+                              <span>{value}</span>
+                              <input
+                                className="mr-1.5"
+                                id="sort"
+                                name="sort"
+                                type="radio"
+                              />
+                            </button>
+                          )),
+                          value: "#232323",
+                        },
+                      ]}
+                      type="single"
+                    />
+                    <Accordion
+                      classNames={{
+                        trigger: "mb-5",
+                        wrapper: "px-5",
+                      }}
+                      items={[
+                        {
+                          title: (
+                            <button className="hover:bg-gray-300 font-bold text-base">
+                              Price
+                            </button>
+                          ),
+                          content: <PriceRange />,
+                          value: "#232323",
+                        },
+                      ]}
+                      type="single"
+                    />
+                  </ul>
+                }
+              />
+            </div>
+          )}
 
           <div>
             <Dropdown
@@ -104,18 +119,17 @@ const SearchFilter = () => {
               }
               DropdownContent={
                 <ul className="flex flex-col ">
-                  <button className="px-5 py-2 cursor-pointer font-semibold text-base hover:bg-gray-100">
-                    Nature
-                  </button>
-                  <button className="px-5 py-2 cursor-pointer text-base hover:bg-gray-100">
-                    Forests
-                  </button>
-                  <button className="px-5 py-2 cursor-pointer text-base hover:bg-gray-100">
-                    Cities
-                  </button>
-                  <button className="px-5 py-2 cursor-pointer text-base hover:bg-gray-100">
-                    Buildings
-                  </button>
+                  {props.categories?.map((category) => (
+                    <button
+                      key={category.label}
+                      className={`px-5 py-2 cursor-pointer ${
+                        category.active && "font-semibold"
+                      } text-base hover:bg-gray-100`}
+                      onClick={category.onClick}
+                    >
+                      {category.label}
+                    </button>
+                  ))}
                 </ul>
               }
             />

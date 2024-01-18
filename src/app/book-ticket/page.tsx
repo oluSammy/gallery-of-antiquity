@@ -243,7 +243,7 @@ const Page = () => {
             defaultNumberOfTickets={parseInt(number || "0")}
           />
         )}
-        {/* {step === 3 && (
+        {step === 3 && (
           <BookingSummary
             selectedDate={selectedDate}
             setStep={setStep}
@@ -251,7 +251,7 @@ const Page = () => {
             selectedValues={values}
             totalValue={totalValue}
           />
-        )} */}
+        )}
       </div>
     </PageLayout>
   );
