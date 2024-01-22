@@ -9,7 +9,7 @@ import NextAuth, { AuthOptions, getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
 export const authOptions: AuthOptions = {
-  secret: process.env.AUTH_SECRET || "secret",
+  secret: process.env.AUTH_SECRET,
   providers: [
     Credentials({
       name: "Credentials",
