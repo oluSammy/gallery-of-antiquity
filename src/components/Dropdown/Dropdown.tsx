@@ -13,7 +13,10 @@ const Dropdown = (props: Props) => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button aria-label="Customise options" className="cursor-pointer ">
+        <button
+          aria-label="Customise options"
+          className="cursor-pointer text-black capitalize text-sm font-semibold"
+        >
           {props.DropdownTrigger}
         </button>
       </DropdownMenu.Trigger>
@@ -31,9 +34,3 @@ const Dropdown = (props: Props) => {
 };
 
 export default Dropdown;
-
-/**
- <DropdownMenu.Item className="DropdownMenuItem">
-            New Tab <div className="RightSlot">⌘+T</div>
-          </DropdownMenu.Item>
- */

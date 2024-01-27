@@ -102,8 +102,6 @@ const Navbar = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
 
-  console.log({ session });
-
   if (isMenuOpen) {
     return (
       <MobileNav

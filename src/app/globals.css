@@ -19,6 +19,38 @@ html {
   font-family: "Noto Sans Hanunoo", sans-serif;
 }
 
+.admin-container {
+  @apply flex w-full;
+}
+
+.admin-sidebar {
+  @apply lg:w-2/12 hidden lg:block;
+}
+
+.admin-main {
+  @apply lg:w-10/12 w-full;
+}
+
+.admin-notification {
+  @apply bg-gray-400 p-2 rounded-md cursor-pointer;
+}
+
+.admin-link {
+  @apply pl-8 py-5 hover:bg-[#F8F8F8] rounded-sm relative;
+}
+
+.admin-sidebar-icon {
+  @apply text-[#5A6474] text-2xl;
+}
+
+.admin-sidebar-active {
+  @apply text-[#FA0303] absolute h-8 w-1.5 bg-[#FA0303] left-0 rounded-tr-md rounded-br-md;
+}
+
+.admin-link-active {
+  @apply bg-[#F8F8F8] text-red-500 font-semibold;
+}
+
 .border-w::after {
   content: "";
   background: red;

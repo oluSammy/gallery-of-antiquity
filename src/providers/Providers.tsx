@@ -23,7 +23,7 @@ const Providers = ({ children }: React.PropsWithChildren) => {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <SessionProvider>{children}</SessionProvider>;
+          <SessionProvider>{children}</SessionProvider>
           <NotificationProvider />
         </PersistGate>
       </Provider>
