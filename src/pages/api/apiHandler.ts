@@ -18,7 +18,6 @@ interface ErrorResponse {
 }
 
 type ApiMethodHandlers = {
-  // eslint-disable-next-line no-unused-vars
   [key in Uppercase<Method>]?: NextApiHandler;
 };
 

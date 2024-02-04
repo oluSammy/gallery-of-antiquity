@@ -8,4 +8,5 @@ export const constants = {
   GET_EMAIL_VERIFICATION: (email: string) => `/verification/${email}`,
   RESET_PASSWORD: (token: string) => `/reset-password/${token}`,
   CHANGE_PASSWORD: "/change-password",
+  CREATE_TOP_CATEGORY: "/categories/top",
 };

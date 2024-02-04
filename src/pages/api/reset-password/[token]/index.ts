@@ -9,8 +9,6 @@ async function resetPassword(req: NextApiRequest, res: NextApiResponse) {
   const { password, passwordConfirm } = req.body;
   const { token } = req.query;
 
-  console.log({ token, password, passwordConfirm });
-
   const data = await AuthService.resetPassword(
     password,
     passwordConfirm,

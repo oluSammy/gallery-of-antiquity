@@ -11,6 +11,7 @@ interface Props {
   children: React.ReactNode;
   className?: string;
   pageTitle?: string;
+  pageLabel?: string;
 }
 
 const Nav = [
@@ -23,6 +24,11 @@ const Nav = [
     label: "Tickets",
     link: "/admin/tickets",
     icon: <IoStatsChartSharp className="admin-sidebar-icon" />,
+  },
+  {
+    label: "Top Categories",
+    link: "/admin/top-categories",
+    icon: <MdOutlineProductionQuantityLimits className="admin-sidebar-icon" />,
   },
   {
     label: "Products",
@@ -48,7 +54,7 @@ const Nav = [
 
 const AdminPageLayout = (props: Props) => {
   return (
-    <div >
+    <div>
       <div className="px-6 py-4 border-b border-[#E0DEDE] flex items-center">
         <Link href="/admin">
           <Image
@@ -60,7 +66,9 @@ const AdminPageLayout = (props: Props) => {
           />
         </Link>
         <div className="flex justify-between items-center w-full pl-12">
-          <p className="text-[#787676] text-xl ml-12">{props.pageTitle}</p>
+          <p className="text-[#787676] text-xl ml-12">
+            {props.pageLabel || props.pageTitle}
+          </p>
           <button className="admin-notification">
             <IoIosNotificationsOutline />
           </button>

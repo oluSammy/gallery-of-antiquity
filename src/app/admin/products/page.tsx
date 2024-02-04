@@ -6,12 +6,44 @@ import DashboardCard from "@/components/DashboardCard/DashboardCard";
 import TabComponent from "@/components/TabComponent/TabComponent";
 import AdminPageLayout from "@/containers/AdminPageLayout";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { LuTrendingUp } from "react-icons/lu";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { IoIosAdd } from "react-icons/io";
 import FilterDropdown from "@/components/Dropdown/FilterDropdown";
 import { GoSearch } from "react-icons/go";
+import Table from "@/components/table/Table";
+import { Column } from "react-table";
+import axios from "axios";
+import { useQuery } from "react-query";
+import useApiClient from "@/hooks/useApiClient";
+
+const sampleData = [
+  {
+    name: "T Shirts",
+    type: "Clothing",
+    stock: 23,
+    price: 200,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sizes: "S,M,L,XL",
+  },
+  {
+    name: "T Shirts",
+    type: "Clothing",
+    stock: 23,
+    price: 200,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sizes: "S,M,L,XL",
+  },
+  {
+    name: "T Shirts",
+    type: "Clothing",
+    stock: 23,
+    price: 200,
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    sizes: "S,M,L,XL",
+  },
+];
 
 const Page = () => {
   const [option, setOption] = useState("today");
@@ -20,6 +52,51 @@ const Page = () => {
   const filterOptions = ["T Shirt", "Art", "Pictures", "Caps", "puzzles"];
 
   const options = ["today", "1 Month", "1 Year"];
+
+  const columns = useMemo<Column<any>[]>(
+    () => [
+      {
+        Header: "Name",
+        accessor: "name",
+      },
+      {
+        Header: "Type",
+        accessor: "type",
+      },
+      {
+        Header: "Stock",
+        accessor: "stock",
+      },
+      {
+        Header: "Price",
+        accessor: "price",
+      },
+      {
+        Header: "Description",
+        accessor: "description",
+      },
+      {
+        Header: "Sizes",
+        accessor: "sizes",
+      },
+    ],
+    []
+  );
+  // const [data, setData] = useState([]);
+
+  // const apiClient = useApiClient();
+
+  const { data, isLoading } = useQuery<any, Error>(["blog-list"], async () => {
+    const response = await axios("https://api.tvmaze.com/search/shows?q=snow");
+    // await apiClient.get(
+    //   "https://api.tvmaze.com/search/shows?q=snow"
+    // );
+
+    return response.data;
+  });
+
+  console.log({ data }, "data data data");
+
   return (
     <AdminPageLayout pageTitle="Products">
       <div className="py-4">
@@ -76,12 +153,24 @@ const Page = () => {
           <TabComponent
             contents={[
               {
-                content: <div>Products</div>,
+                content: (
+                  <Table
+                    columns={columns}
+                    data={data ? data : []}
+                    loading={isLoading}
+                  />
+                ),
                 triggerId: "tab1",
                 triggerTitle: "Products",
               },
               {
-                content: <div>Out Of Stock</div>,
+                content: (
+                  <Table
+                    columns={columns}
+                    data={data ? data : []}
+                    loading={isLoading}
+                  />
+                ),
                 triggerId: "tab2",
                 triggerTitle: "Out Of Stock!",
               },

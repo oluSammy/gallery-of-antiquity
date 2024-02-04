@@ -84,17 +84,6 @@ class Authentication {
     email: string,
     apiKey: string
   ) {
-    console.log(
-      {
-        password,
-        previousPassword,
-        passwordConfirm,
-        email,
-        apiKey,
-      },
-      "unprecedented"
-    );
-
     const res = await callApi({
       apiPath: `auth/change-password`,
       method: "POST",

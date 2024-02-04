@@ -62,9 +62,13 @@ export async function callApi<T>({
     requestParams.headers!.authorization = `Bearer ${apiKey}`;
   }
 
-  console.log({
-    headers: requestParams.headers,
-  }, "safe place");
+  console.log(
+    {
+      headers: requestParams.headers,
+      body,
+    },
+    "safe place"
+  );
 
   if (body) {
     if (method === "POST" || method === "DELETE") {

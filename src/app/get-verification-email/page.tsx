@@ -8,7 +8,6 @@ import { useFormik } from "formik";
 import Loader from "@/components/loader/Loader";
 import { useState } from "react";
 import useApiClient from "@/hooks/useApiClient";
-import { useQuery } from "react-query";
 import { constants } from "@/constants/constants";
 import { useAppDispatch } from "@/redux/hooks";
 import { openNotificationWithMessage } from "@/redux/Notification";
