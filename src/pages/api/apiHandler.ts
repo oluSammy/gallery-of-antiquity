@@ -37,13 +37,6 @@ export function apiHandler(handler: ApiMethodHandlers, withAuth?: boolean) {
     // console.log("sessionsino...", session);
     const session = await getServerSession(req, res, authOptions);
 
-    console.log(
-      {
-        session,
-      },
-      "SERVER SESSION"
-    );
-
     if (!session && withAuth) {
       //   logger.error("Unauthorized request: " + JSON.stringify(req.headers));
       return res.status(401).json({

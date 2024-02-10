@@ -2,25 +2,38 @@
 
 import ActionButton from "@/components/Button/ActionButton";
 import CustomInput from "@/components/Input/Input";
+import Loader from "@/components/loader/Loader";
 import { constants } from "@/constants/constants";
 import AdminPageLayout from "@/containers/AdminPageLayout";
 import useApiClient from "@/hooks/useApiClient";
 import { openNotificationWithMessage } from "@/redux/Notification";
 import { useAppDispatch } from "@/redux/hooks";
 import Link from "next/link";
-import React, { useState } from "react";
+// import { useRouter } from "next/navigation";
+// import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 
-const Page = () => {
+const Page = ({ params }: { params: { id: string } }) => {
   const [category, setCategory] = useState("");
-  const apiCLient = useApiClient();
+
+  const url = constants.TOP_CATEGORY(params.id);
+  const apiClient = useApiClient();
   const dispatch = useAppDispatch();
 
-  const { isLoading, mutate } = useMutation({
+  const { data, isLoading } = useQuery<any, Error>(
+    ["get-one-top-category", params.id],
+    async () => {
+      const response = await apiClient.get(url);
+      return response.data;
+    }
+  );
+
+  const { isLoading: isUpdating, mutate } = useMutation({
     mutationFn: async () => {
       try {
-        await apiCLient.post(constants.TOP_CATEGORY(), {
+        await apiClient.put(url, {
           categoryName: category,
         });
 
@@ -28,7 +41,7 @@ const Page = () => {
           openNotificationWithMessage({
             type: "success",
             title: "Done",
-            description: "Top Category Created",
+            description: "Top Category Updated",
           })
         );
       } catch (error) {
@@ -36,12 +49,18 @@ const Page = () => {
           openNotificationWithMessage({
             type: "error",
             title: "Error",
-            description: "Unable to create top category",
+            description: "Unable to update a top category",
           })
         );
       }
     },
   });
+
+  useEffect(() => {
+    if (data) {
+      setCategory(data.product.product.productType);
+    }
+  }, [data]);
 
   return (
     <AdminPageLayout pageTitle="Top Categories" pageLabel="Top Categories">
@@ -54,27 +73,36 @@ const Page = () => {
           <IoIosArrowForward />
         </Link>
         <button
-          className={`flex items-center mr-8 hover:bg-[#f7f7f7] px-2 py-1 cursor-pointer rounded-sm w-fit`}
+          className={`flex items-center mr-8 hover:bg-[#f7f7f7] font-bold px-2 py-1 cursor-pointer rounded-sm w-fit`}
         >
-          <span className="mr-5">Add a top category</span>
+          <span className="mr-5">Update category</span>
         </button>
       </div>
       <div className="mt-8 ml-5">
         <div className="grid grid-cols-12">
           <div className="lg:col-span-6 col-span-full">
-            <CustomInput
-              value={category}
-              setValue={setCategory}
-              type="text"
-              placeholder="Top Category"
-            />
+            <div className="flex items-center ">
+              <CustomInput
+                value={category}
+                setValue={setCategory}
+                type="text"
+                placeholder="Top Category"
+              />
+              {isLoading && (
+                <div className="w-fit ml-4">
+                  <Loader height={40} width={40} color="#666666" />
+                </div>
+              )}
+            </div>
 
             <ActionButton
-              label="Create New"
+              label="Update Category"
+              // onClick={() => {
+              // }}
               onClick={mutate}
               className="mt-8"
               disabled={!category}
-              isLoading={isLoading}
+              isLoading={isUpdating}
             />
           </div>
         </div>

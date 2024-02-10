@@ -76,7 +76,6 @@ const Page = () => {
           })
         );
       } catch (error: any) {
-        console.log({ error });
         setIsLoading(false);
         dispatch(
           openNotificationWithMessage({
@@ -94,9 +93,7 @@ const Page = () => {
     e.preventDefault();
     try {
       handleSubmit();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   return (

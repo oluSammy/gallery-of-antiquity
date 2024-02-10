@@ -35,7 +35,6 @@ const Page = () => {
       initialValues,
       validationSchema: loginSchema,
       onSubmit: (values) => {
-        console.log(values);
         setIsLoading(true);
         signIn("credentials", {
           redirect: false,

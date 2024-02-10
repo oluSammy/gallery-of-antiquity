@@ -37,7 +37,6 @@ const Page = () => {
           email: values.email,
         });
 
-        console.log({ response });
         dispatch(
           openNotificationWithMessage({
             type: "success",
@@ -62,7 +61,6 @@ const Page = () => {
   const handleClick = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     handleSubmit();
-    // console.log('Email: ', email);
   };
 
   return (

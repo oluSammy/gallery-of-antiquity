@@ -40,7 +40,6 @@ const Page = () => {
     validationSchema: schema,
     onSubmit: async (values) => {
       setIsLoading(true);
-      console.log({ values });
 
       try {
         const response = await apiCLient.get(
@@ -57,7 +56,6 @@ const Page = () => {
         );
       } catch (error: any) {
         setIsLoading(false);
-        console.log(error.response.data.errorMessage.message);
         dispatch(
           openNotificationWithMessage({
             type: "error",
@@ -72,7 +70,6 @@ const Page = () => {
   const dispatch = useAppDispatch();
 
   const getEmail = () => {
-    console.log({ isValid });
     handleSubmit();
   };
 

@@ -2,8 +2,6 @@ import { callApi } from "@/utils/callApi";
 
 class Authentication {
   async signIn(email?: string, password?: string) {
-    console.log("emailino", { password, email });
-
     const res = (await callApi({
       apiPath: "/auth/login",
       method: "POST",

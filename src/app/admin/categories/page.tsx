@@ -4,23 +4,29 @@ import AdminPageLayout from "@/containers/AdminPageLayout";
 import Link from "next/link";
 import React, { useMemo, useState } from "react";
 import { IoIosAdd } from "react-icons/io";
+import FilterDropdown from "@/components/Dropdown/FilterDropdown";
 import { GoSearch } from "react-icons/go";
 import { Column } from "react-table";
+import { useQuery } from "react-query";
+import axios from "axios";
 import Table from "@/components/table/Table";
-import { dateTimeFormat } from "@/constants/constants";
+import useApiClient from "@/hooks/useApiClient";
+import { constants, dateTimeFormat } from "@/constants/constants";
 import { format } from "date-fns";
 import Switch from "@/components/Switch/Switch";
 import { IoIosArrowForward } from "react-icons/io";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
-
-const filterOptions = ["T Shirt", "Art", "Pictures", "Caps", "puzzles"];
+import DialogComponent from "@/components/Modal/Modal";
+import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
 
 const Page = () => {
+  const apiClient = useApiClient();
+  // productFeatId
   const columns = useMemo<Column<any>[]>(
     () => [
       {
         Header: "Name",
-        accessor: "productType",
+        accessor: "categoryName",
       },
       {
         Header: "Created At",
@@ -33,10 +39,23 @@ const Page = () => {
         },
       },
       {
+        Header: "Top Category",
+        accessor: "productFeatId",
+        Cell: (cell) => {
+          return <p>{cell.row.original.productFeatId.productType}</p>;
+        },
+      },
+      {
         Header: "Action",
-        Cell: () => {
-          const [checked, setChecked] = useState(false);
-          return <Switch checked={checked} onChange={setChecked} />;
+        Cell: (cell) => {
+          const url = constants.CATEGORY(cell.row.original._id);
+          return (
+            <ActiveDialog
+              name={cell.row.original.categoryName}
+              updateUrl={url}
+              type={cell.row.original.active ? "disable" : "enable"}
+            />
+          );
         },
       },
       {
@@ -44,7 +63,7 @@ const Page = () => {
         Cell: (cell) => {
           return (
             <Link
-              href={`/admin/top-categories/edit/${cell.row.original._id}`}
+              href={`/admin/categories/edit/${cell.row.original._id}`}
               className={`flex items-center justify-center rounded-full text-[#737373]  hover:bg-[#f7f7f7] h-7 w-7 font-bold border-[#8B83BA] border-2 cursor-pointer`}
             >
               <IoIosArrowForward className="text-[#8B83BA]" />
@@ -56,13 +75,19 @@ const Page = () => {
     []
   );
 
-  const { data, isLoading } = useGetTopCategories();
+  const { data, isLoading } = useQuery<any, Error>(
+    ["get-all-categories"],
+    async () => {
+      const response = await apiClient.get(constants.CATEGORY());
+      return response.data;
+    }
+  );
 
   return (
-    <AdminPageLayout pageTitle="Top Categories" pageLabel="Top Categories">
+    <AdminPageLayout pageTitle="Categories" pageLabel="Categories">
       <div className="my-8 flex items-center justify-end pr-8">
         <Link
-          href="/admin/top-categories/new"
+          href="/admin/categories/new"
           className="flex items-center bg-[#FA0303] text-white w-fit px-4 py-3 rounded-lg mr-4 "
         >
           <IoIosAdd className="border rounded-md mr-1" />
@@ -87,7 +112,7 @@ const Page = () => {
 
       <Table
         columns={columns}
-        data={data ? data?.products?.product ?? [] : []}
+        data={data ? data.category ?? [] : []}
         loading={isLoading}
       />
     </AdminPageLayout>

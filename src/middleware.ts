@@ -12,5 +12,6 @@ export const config = {
     "/books",
     "/souvenir",
     "/pictures",
+    "/admin",
   ],
 };

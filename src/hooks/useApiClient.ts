@@ -11,8 +11,6 @@ const useApiClient = () => {
 
   const { data: session } = useSession();
 
-  console.log("session", session);
-
   const apiClient = axios.create({
     baseURL: baseUrl,
     headers: {

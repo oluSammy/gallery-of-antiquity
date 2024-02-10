@@ -1,35 +1,33 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { apiHandler } from "../../apiHandler";
 import CategoriesService from "@/services/category";
 import { auth } from "@/auth/auth";
 import { StatusCodes } from "http-status-codes";
+import { apiHandler } from "../apiHandler";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function createCategory(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
-  const { categoryName } = req.body;
+  const { categoryName, productTypeId } = req.body;
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.createTopCategory(
+  const data = await categoryService.createCategory(
     result?.user.accessToken || "",
-    categoryName
+    categoryName,
+    productTypeId
   );
 
   return res.status(StatusCodes.CREATED).json(data);
 }
 
-async function getTopCategoriesHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function getCategories(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.getTopCategories(
+  const data = await categoryService.getCategories(
     result?.user.accessToken || ""
   );
 
@@ -37,6 +35,6 @@ async function getTopCategoriesHandler(
 }
 
 export default apiHandler({
-  POST: handler,
-  GET: getTopCategoriesHandler,
+  POST: createCategory,
+  GET: getCategories,
 });

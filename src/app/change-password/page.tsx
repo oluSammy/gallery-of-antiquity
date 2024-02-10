@@ -60,8 +60,6 @@ const Page = () => {
             email: session?.user.data.email,
           });
 
-          console.log({ response });
-
           setIsLoading(false);
           // router.push("/?status=signout");
           // signOut();
@@ -77,7 +75,6 @@ const Page = () => {
           );
         } catch (error: any) {
           setIsLoading(false);
-          console.log({ error: error.response.data.errorMessage.message });
           dispatch(
             openNotificationWithMessage({
               type: "error",

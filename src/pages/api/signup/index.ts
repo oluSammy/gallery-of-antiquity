@@ -21,8 +21,6 @@ async function signUp(
     confirmPassword
   );
 
-  // console.log("DATA", data);
-
   return res.status(StatusCodes.OK).json(data);
 }
 

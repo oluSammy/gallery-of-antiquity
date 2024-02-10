@@ -35,13 +35,8 @@ export async function callApi<T>({
     }
   }
 
-  const apiBaseUrl = constants.backendApiBaseUrl;
-
-  console.log({
-    apiBaseUrl,
-    apiKey,
-  });
-
+  // const apiBaseUrl = constants.backendApiBaseUrl;
+  const apiBaseUrl = constants.API_BASE_URL_LOCAL;
   const url = apiPath.startsWith("http")
     ? apiPath
     : new nodeUrl.URL(`${apiBaseUrl}/${apiPath}`).href;
@@ -62,30 +57,19 @@ export async function callApi<T>({
     requestParams.headers!.authorization = `Bearer ${apiKey}`;
   }
 
-  console.log(
-    {
-      headers: requestParams.headers,
-      body,
-    },
-    "safe place"
-  );
-
   if (body) {
-    if (method === "POST" || method === "DELETE") {
-      requestParams.data = body;
-    } else if (method === "PATCH") {
-      const patchData = Object.keys(body).map((key) => ({
-        path: key,
-        op: "add",
-        value: body[key],
-      }));
-
-      requestParams.data = patchData;
-    }
+    requestParams.data = body;
   }
 
   // console.log("!!", axios.getUri(requestParams));
-  // console.log("!! data", requestParams.data);
+  console.log(
+    "!! data",
+    requestParams.data,
+    requestParams.url,
+    requestParams.method,
+
+    "!! data"
+  );
   return axios(requestParams)
     .then((result) => result.data)
     .catch((err: AxiosError) => {

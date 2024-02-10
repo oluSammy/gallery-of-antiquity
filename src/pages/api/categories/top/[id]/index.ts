@@ -1,42 +1,42 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { apiHandler } from "../../apiHandler";
 import CategoriesService from "@/services/category";
 import { auth } from "@/auth/auth";
 import { StatusCodes } from "http-status-codes";
+import { apiHandler } from "@/pages/api/apiHandler";
 
-async function handler(req: NextApiRequest, res: NextApiResponse) {
+async function getOneTopCategory(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
-  const { categoryName } = req.body;
+  const { id } = req.query;
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.createTopCategory(
+  const data = await categoryService.getOneTopCategory(
     result?.user.accessToken || "",
-    categoryName
+    id as string
   );
 
   return res.status(StatusCodes.CREATED).json(data);
 }
 
-async function getTopCategoriesHandler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+async function updateTopCategory(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
+  const { id } = req.query;
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.getTopCategories(
-    result?.user.accessToken || ""
+  const data = await categoryService.updateTopCategory(
+    result?.user.accessToken || "",
+    id as string,
+    req.body.categoryName
   );
 
-  return res.status(StatusCodes.OK).json(data);
+  return res.status(StatusCodes.CREATED).json(data);
 }
 
 export default apiHandler({
-  POST: handler,
-  GET: getTopCategoriesHandler,
+  GET: getOneTopCategory,
+  PUT: updateTopCategory,
 });

@@ -75,7 +75,6 @@ const Page = () => {
         mutation
           .mutateAsync(values)
           .then((response) => {
-            console.log(response, "qwerty");
             // push to login page
 
             dispatch(
@@ -106,7 +105,6 @@ const Page = () => {
     try {
       handleSubmit();
     } catch (error) {
-      console.log(error);
     }
   };
 

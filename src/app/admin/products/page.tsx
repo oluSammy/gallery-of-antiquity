@@ -95,8 +95,6 @@ const Page = () => {
     return response.data;
   });
 
-  console.log({ data }, "data data data");
-
   return (
     <AdminPageLayout pageTitle="Products">
       <div className="py-4">

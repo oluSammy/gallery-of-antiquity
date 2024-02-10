@@ -8,8 +8,6 @@ async function getEmailVerification(req: NextApiRequest, res: NextApiResponse) {
 
   const { email } = req.query;
 
-  console.log({ email });
-
   const data = await AuthService.getEmailVerificationToken(email as string);
 
   return res.status(StatusCodes.OK).json(data);

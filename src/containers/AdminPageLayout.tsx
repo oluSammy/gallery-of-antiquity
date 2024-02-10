@@ -2,10 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { RiDashboardLine } from "react-icons/ri";
-import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import {
+  MdOutlineProductionQuantityLimits,
+  MdOutlineCategory,
+} from "react-icons/md";
 import { CiCreditCard2 } from "react-icons/ci";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { IoSettingsOutline, IoStatsChartSharp } from "react-icons/io5";
+import { BiCategoryAlt } from "react-icons/bi";
 
 interface Props {
   children: React.ReactNode;
@@ -28,7 +32,12 @@ const Nav = [
   {
     label: "Top Categories",
     link: "/admin/top-categories",
-    icon: <MdOutlineProductionQuantityLimits className="admin-sidebar-icon" />,
+    icon: <BiCategoryAlt className="admin-sidebar-icon" />,
+  },
+  {
+    label: "Categories",
+    link: "/admin/categories",
+    icon: <MdOutlineCategory className="admin-sidebar-icon" />,
   },
   {
     label: "Products",

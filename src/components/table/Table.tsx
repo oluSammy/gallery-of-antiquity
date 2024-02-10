@@ -1,5 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Column, useTable } from "react-table";
+import Loader from "../loader/Loader";
+import { ThreeDots } from "react-loader-spinner";
 
 type Props<T extends object> = {
   columns: Column<T>[];
@@ -41,6 +43,17 @@ const Table = <T extends object>(props: Props<T>) => {
             </tr>
           ))}
         </thead>
+        {props.loading && (
+          <tbody>
+            <tr>
+              <td colSpan={100}>
+                <div className="flex items-center justify-center">
+                  <Loader height={40} width={40} color="#666666" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        )}
         <tbody {...getTableBodyProps()}>
           {rows.map((row, i) => {
             prepareRow(row);
