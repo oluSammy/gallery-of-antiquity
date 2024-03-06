@@ -124,8 +124,6 @@ const Page = () => {
     [startDate]
   );
 
-  console.log(values, " values values");
-
   const offset = isSunday(daysOfTheMonth[0]) ? 0 : daysOfTheMonth[0].getDay();
   const selectDate = (date: Date) => {
     // validate date availability

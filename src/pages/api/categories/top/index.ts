@@ -26,11 +26,14 @@ async function getTopCategoriesHandler(
 ) {
   const categoryService = new CategoriesService();
 
+  console.log("HERE  3");
+
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
   const data = await categoryService.getTopCategories(
-    result?.user.accessToken || ""
+    result?.user.accessToken || "",
+    req.query
   );
 
   return res.status(StatusCodes.OK).json(data);

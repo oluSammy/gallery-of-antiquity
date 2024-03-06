@@ -1,7 +1,7 @@
 import React from "react";
 
 interface Props {
-  type: "text" | "textarea" | "dropdown";
+  type: "text" | "textarea" | "dropdown" | "number";
   placeholder: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
@@ -10,7 +10,7 @@ interface Props {
 
 const CustomInput = (props: Props) => {
   return (
-    <div>
+    <div className={props.className ?? ""}>
       <input
         className="border placeholder:text-sm w-full py-4 px-8 rounded-md border-black"
         value={props.value}

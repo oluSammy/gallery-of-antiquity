@@ -18,10 +18,16 @@ import { IoIosArrowForward } from "react-icons/io";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
 import DialogComponent from "@/components/Modal/Modal";
 import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
+import { useDebounce } from "usehooks-ts";
+import PaginatedItems from "@/components/pagination";
 
 const Page = () => {
   const apiClient = useApiClient();
-  // productFeatId
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedValue = useDebounce<string>(searchQuery, 500);
+  const [page, setPage] = useState(1);
+  const limit = 10;
+
   const columns = useMemo<Column<any>[]>(
     () => [
       {
@@ -75,12 +81,10 @@ const Page = () => {
     []
   );
 
-  const { data, isLoading } = useQuery<any, Error>(
-    ["get-all-categories"],
-    async () => {
-      const response = await apiClient.get(constants.CATEGORY());
-      return response.data;
-    }
+  const { data, isLoading, isFetching } = useGetCategories(
+    debouncedValue,
+    page,
+    limit
   );
 
   return (
@@ -105,18 +109,56 @@ const Page = () => {
               placeholder="search"
               className="bg-[#F5F4F4] w-full px-8 py-2 rounded-md ml-3 "
               type="search"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchQuery}
             />
           </div>
         </div>
       </div>
-
       <Table
         columns={columns}
         data={data ? data.category ?? [] : []}
         loading={isLoading}
       />
+
+      <div className="pb-20">
+        <PaginatedItems
+          PageNumber={page}
+          TotalCount={data ? data.total : 0}
+          currentTotal={data ? data.currentTotal : 0}
+          itemsPerPage={limit}
+          setCurrentPage={(num) => {
+            setPage(num);
+          }}
+          setItemsPerPage={() => {}}
+          showEntries
+          isLoading={isLoading || isFetching}
+        />
+      </div>
     </AdminPageLayout>
   );
 };
 
 export default Page;
+
+export const useGetCategories = (
+  value: string,
+  page: number,
+  limit: number
+) => {
+  const apiClient = useApiClient();
+
+  const { data, isLoading, isFetching } = useQuery<any, Error>(
+    ["get-all-categories", value, page, limit],
+    async () => {
+      let urlString = `${constants.CATEGORY()}?search=${[
+        "categoryName",
+        value,
+      ]}&page=${page}&limit=${limit}`;
+      const response = await apiClient.get(urlString);
+      return response.data;
+    }
+  );
+
+  return { data, isLoading, isFetching };
+};

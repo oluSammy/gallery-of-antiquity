@@ -124,7 +124,7 @@ const Page = () => {
 
         <div className="mt-8 flex items-center justify-end pr-8">
           <Link
-            href="/"
+            href="/admin/products/new"
             className="flex items-center bg-[#FA0303] text-white w-fit px-4 py-3 rounded-lg mr-4 "
           >
             <IoIosAdd className="border rounded-md mr-1" />

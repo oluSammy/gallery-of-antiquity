@@ -1,4 +1,5 @@
 import { callApi } from "@/utils/callApi";
+import { NextApiRequest } from "next";
 
 class CategoriesService {
   // Top Categories
@@ -14,10 +15,11 @@ class CategoriesService {
     });
   }
 
-  async getTopCategories(apiKey: string) {
+  async getTopCategories(apiKey: string, query: Record<string, any>) {
     return await callApi({
       apiPath: "product-type",
       apiKey,
+      queryParameters: query,
     });
   }
 
@@ -28,22 +30,25 @@ class CategoriesService {
     });
   }
 
-  async updateTopCategory(apiKey: string, id: string, categoryName: string) {
+  async updateTopCategory(
+    apiKey: string,
+    id: string,
+    body: Record<string, any>
+  ) {
     return await callApi({
       apiPath: `product-type/${id}`,
       apiKey,
-      body: {
-        productType: categoryName,
-      },
+      body,
       method: "PUT",
     });
   }
 
   // categories
-  async getCategories(apiKey: string) {
+  async getCategories(apiKey: string, query: Record<string, any>) {
     return await callApi({
       apiPath: "product-categories",
       apiKey,
+      queryParameters: query,
     });
   }
 
@@ -81,6 +86,14 @@ class CategoriesService {
       apiKey,
       body,
       method: "PATCH",
+    });
+  }
+
+  async getCategoriesByTopCategoryId(apiKey: string, topCategoryId: string) {
+    console.log(`product-categories/productFeat/${topCategoryId}`, "`product-categories/productFeat/${topCategoryId}`")
+    return await callApi({
+      apiPath: `product-categories/productFeat/${topCategoryId}`,
+      apiKey,
     });
   }
 }

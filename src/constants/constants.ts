@@ -21,6 +21,8 @@ export const constants = {
     }
     return "/categories";
   },
+  PRODUCTS: (id?: string) => (id ? `/products/${id}` : "/products"),
+  categoriesByTopCategoryId: (id: string) => `/categories/topCategoryId/${id}`,
 };
 
 export const dateTimeFormat = {

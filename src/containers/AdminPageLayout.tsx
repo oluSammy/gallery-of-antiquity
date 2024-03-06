@@ -101,7 +101,7 @@ const AdminPageLayout = (props: Props) => {
             </Link>
           ))}
         </div>
-        <div className="admin-main md:px-6 px-2">{props.children}</div>
+        <div className="admin-main md:px-6 px-2 pb-10">{props.children}</div>
       </div>
     </div>
   );

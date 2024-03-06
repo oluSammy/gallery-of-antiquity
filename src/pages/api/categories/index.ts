@@ -24,11 +24,14 @@ async function createCategory(req: NextApiRequest, res: NextApiResponse) {
 async function getCategories(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
+  console.log("HERE  5");
+
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
   const data = await categoryService.getCategories(
-    result?.user.accessToken || ""
+    result?.user.accessToken || "",
+    req.query
   );
 
   return res.status(StatusCodes.OK).json(data);

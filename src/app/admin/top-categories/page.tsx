@@ -7,15 +7,24 @@ import { IoIosAdd } from "react-icons/io";
 import { GoSearch } from "react-icons/go";
 import { Column } from "react-table";
 import Table from "@/components/table/Table";
-import { dateTimeFormat } from "@/constants/constants";
+import { constants, dateTimeFormat } from "@/constants/constants";
 import { format } from "date-fns";
 import Switch from "@/components/Switch/Switch";
 import { IoIosArrowForward } from "react-icons/io";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
+import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
+import { useDebounce } from "usehooks-ts";
+import PaginatedItems from "@/components/pagination";
 
 const filterOptions = ["T Shirt", "Art", "Pictures", "Caps", "puzzles"];
 
 const Page = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedValue = useDebounce<string>(searchQuery, 500);
+  const [page, setPage] = useState(1);
+
+  const limit = 10;
+
   const columns = useMemo<Column<any>[]>(
     () => [
       {
@@ -34,9 +43,16 @@ const Page = () => {
       },
       {
         Header: "Action",
-        Cell: () => {
-          const [checked, setChecked] = useState(false);
-          return <Switch checked={checked} onChange={setChecked} />;
+        Cell: (cell) => {
+          const url = constants.TOP_CATEGORY(cell.row.original._id);
+
+          return (
+            <ActiveDialog
+              name={cell.row.original.productType}
+              updateUrl={url}
+              type={cell.row.original.active ? "disable" : "enable"}
+            />
+          );
         },
       },
       {
@@ -56,7 +72,12 @@ const Page = () => {
     []
   );
 
-  const { data, isLoading } = useGetTopCategories();
+  const { data, isLoading, isFetching } = useGetTopCategories(
+    page,
+    limit,
+    "productType",
+    debouncedValue
+  );
 
   return (
     <AdminPageLayout pageTitle="Top Categories" pageLabel="Top Categories">
@@ -80,6 +101,8 @@ const Page = () => {
               placeholder="search"
               className="bg-[#F5F4F4] w-full px-8 py-2 rounded-md ml-3 "
               type="search"
+              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchQuery}
             />
           </div>
         </div>
@@ -87,8 +110,21 @@ const Page = () => {
 
       <Table
         columns={columns}
-        data={data ? data?.products?.product ?? [] : []}
+        data={data ? data?.products?.products ?? [] : []}
         loading={isLoading}
+      />
+
+      <PaginatedItems
+        PageNumber={page}
+        TotalCount={data ? data?.products?.totalCount : 0}
+        currentTotal={data ? data?.products?.currentTotal : 0}
+        itemsPerPage={limit}
+        setCurrentPage={(num) => {
+          setPage(num);
+        }}
+        setItemsPerPage={() => {}}
+        showEntries
+        isLoading={isLoading || isFetching}
       />
     </AdminPageLayout>
   );

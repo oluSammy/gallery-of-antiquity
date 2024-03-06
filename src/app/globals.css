@@ -76,3 +76,23 @@ html {
     opacity: 0.5;
   }
 }
+
+.pagination {
+  background-color: #e2e2e5;
+  @apply p-2 w-full items-center flex justify-end;
+}
+
+.pagination a {
+  @apply mx-2 hover:bg-gray-400 p-2 rounded-sm;
+}
+.pagination__link {
+  @apply hover:bg-gray-400;
+}
+
+.pagination__link--active a {
+  @apply font-bold;
+}
+
+.pagination__link--disabled a {
+  color: rgb(198, 197, 202);
+}

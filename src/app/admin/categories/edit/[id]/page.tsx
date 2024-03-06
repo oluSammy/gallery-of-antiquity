@@ -15,6 +15,8 @@ import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useMutation, useQuery } from "react-query";
 
+const PER_PAGE = 10;
+
 const Page = ({ params }: { params: { id: string } }) => {
   const [category, setCategory] = useState("");
 
@@ -24,6 +26,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   const { data, isLoading } = useQuery<any, Error>(
     ["get-one-category", params.id],
+
     async () => {
       const response = await apiClient.get(url);
       return response.data;
@@ -98,7 +101,6 @@ const Page = ({ params }: { params: { id: string } }) => {
             <ActionButton
               label="Update Category"
               // onClick={() => {
-              //   console.log("clicked");
               // }}
               onClick={mutate}
               className="mt-8"
