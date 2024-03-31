@@ -20,9 +20,9 @@ import DialogComponent from "@/components/Modal/Modal";
 import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
 import { useDebounce } from "usehooks-ts";
 import PaginatedItems from "@/components/pagination";
+import { useGetCategories } from "@/hooks/useGetCategories";
 
 const Page = () => {
-  const apiClient = useApiClient();
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedValue = useDebounce<string>(searchQuery, 500);
   const [page, setPage] = useState(1);
@@ -140,25 +140,3 @@ const Page = () => {
 };
 
 export default Page;
-
-export const useGetCategories = (
-  value: string,
-  page: number,
-  limit: number
-) => {
-  const apiClient = useApiClient();
-
-  const { data, isLoading, isFetching } = useQuery<any, Error>(
-    ["get-all-categories", value, page, limit],
-    async () => {
-      let urlString = `${constants.CATEGORY()}?search=${[
-        "categoryName",
-        value,
-      ]}&page=${page}&limit=${limit}`;
-      const response = await apiClient.get(urlString);
-      return response.data;
-    }
-  );
-
-  return { data, isLoading, isFetching };
-};

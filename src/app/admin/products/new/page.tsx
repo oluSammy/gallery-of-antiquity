@@ -10,6 +10,7 @@ import useApiClient from "@/hooks/useApiClient";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
 import { openNotificationWithMessage } from "@/redux/Notification";
 import { useAppDispatch } from "@/redux/hooks";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
@@ -31,6 +32,8 @@ const Page = () => {
   const apiClient = useApiClient();
   const dispatch = useAppDispatch();
 
+  const { data: session } = useSession();
+
   // fetch all top categories
   const { data: topCategories, isLoading: isLoadingTopCategories } =
     useGetTopCategories(1, 10000, "", "");
@@ -51,22 +54,43 @@ const Page = () => {
     }
   );
 
-  const { isLoading, mutate } = useMutation({
+  const { isLoading, mutate, data } = useMutation({
     mutationFn: async () => {
       try {
         const formData = new FormData();
         formData.append("productPic", files[0]);
+        formData.append("productName", name);
+        size.split(",").map((item: string, index: number) => {
+          formData.append("size", item);
+        });
         formData.append("productCategoryId", category.id);
         formData.append("productFeatId", topCategory.id);
         formData.append("description", description);
         formData.append("amount", amount);
         formData.append("quantity", quantity);
         formData.append("inStock", "true");
-        // size
 
-        await apiClient.post(constants.PRODUCTS(), {
-          categoryName: category,
-          productTypeId: topCategory.id,
+        const data = await apiClient.post(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL_LOCAL}/product`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              authorization: `Bearer ${session?.user.accessToken}`,
+            },
+          }
+        );
+
+        // reset states
+        setName("");
+        setSize("");
+        setDescription("");
+        setAmount("");
+        setQuantity("");
+        setFiles([]);
+        setTopCategory({
+          id: "",
+          name: "",
         });
 
         dispatch(
@@ -92,16 +116,16 @@ const Page = () => {
     <AdminPageLayout pageTitle="Products" pageLabel="Create Products">
       <div className="mt-8 flex items-center ">
         <Link
-          href="/admin/categories"
+          href="/admin/products"
           className={`flex items-center mr-4 text-[#737373] hover:bg-[#f7f7f7] px-2 py-1 cursor-pointer rounded-sm w-fit`}
         >
-          <span className="mr-2">Categories</span>
+          <span className="mr-2">Products</span>
           <IoIosArrowForward />
         </Link>
         <button
           className={`flex items-center mr-8 hover:bg-[#f7f7f7] px-2 py-1 cursor-pointer font-bold rounded-sm w-fit`}
         >
-          <span className="mr-5">Add a category</span>
+          <span className="mr-5">Add Products</span>
         </button>
       </div>
       <div className="mt-8 ml-5 pb-20">

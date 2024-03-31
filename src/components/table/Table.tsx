@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Column, useTable } from "react-table";
 import Loader from "../loader/Loader";
 import { ThreeDots } from "react-loader-spinner";
+import { MdHourglassEmpty } from "react-icons/md";
 
 type Props<T extends object> = {
   columns: Column<T>[];
@@ -49,6 +50,20 @@ const Table = <T extends object>(props: Props<T>) => {
               <td colSpan={100}>
                 <div className="flex items-center justify-center">
                   <Loader height={40} width={40} color="#666666" />
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        )}
+        {!props.loading && rows.length === 0 && (
+          <tbody>
+            <tr>
+              <td colSpan={100}>
+                <div className="flex items-center justify-center mt-14">
+                  <div className="flex flex-col justify-center items-center">
+                    <MdHourglassEmpty className="text-4xl" />
+                    <p className="text-[#666666] mt-4">No data available</p>
+                  </div>
                 </div>
               </td>
             </tr>

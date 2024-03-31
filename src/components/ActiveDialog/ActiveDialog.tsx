@@ -12,6 +12,9 @@ interface Props {
   updateUrl: string;
   name: string;
   type: "enable" | "disable";
+  enableTitle?: string;
+  disableTitle?: string;
+  title?: string;
 }
 
 const ActiveDialog = (props: Props) => {
@@ -66,6 +69,9 @@ const ActiveDialog = (props: Props) => {
             updateUrl={props.updateUrl}
             type={props.type}
             name={props.name}
+            enableTitle={props.enableTitle}
+            disableTitle={props.disableTitle}
+            title={props.title}
           />
         }
         onCancel={() => {}}
@@ -89,21 +95,27 @@ interface FeedbackModalProps {
   closeModal: () => void;
   type: "enable" | "disable";
   name: string;
+  enableTitle?: string;
+  disableTitle?: string;
+  title?: string;
 }
 
 const ActiveModal = (props: FeedbackModalProps) => {
+  const {
+    enableTitle = "All Products under this category will become visible to the customers.",
+    disableTitle = "All Products under this category will no longer be visible to the customers.",
+    title = "Category -",
+  } = props;
   return (
     <div>
       <div className="mb-8">
         <h1 className="font-bold text-center text-[#737373] text-xl">
-          {props.type === "enable" ? "Enable" : "Disable"} Category -{" "}
+          {props.type === "enable" ? "Enable" : "Disable"} {title}
           <span className="text-[#FA0303]">{props.name}</span> ?
         </h1>
       </div>
       <p className="text-[#737373] text-lg text-justify">
-        {props.type === "enable"
-          ? "All Products under this category will become visible to the customers."
-          : "All Products under this category will no longer be visible to the customers."}
+        {props.type === "enable" ? enableTitle : disableTitle}
       </p>
     </div>
   );

@@ -10,6 +10,7 @@ type Params = {
   body?: Record<string, any>;
   apiKey?: string;
   authToken?: string;
+  formData?: FormData;
 };
 export async function callApi<T>({
   apiPath,
@@ -18,6 +19,7 @@ export async function callApi<T>({
   body,
   apiKey,
   authToken,
+  formData,
 }: Params): Promise<T> {
   if (process.env.NODE_ENV === "development") {
     // console.log(
@@ -67,9 +69,18 @@ export async function callApi<T>({
     requestParams.data,
     requestParams.url,
     requestParams.method,
-
     "!! data"
   );
+
+  if (formData) {
+    return await axios.post(requestParams.url!, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        authorization: `Bearer ${apiKey}`,
+      },
+    });
+  }
+
   return axios(requestParams)
     .then((result) => result.data)
     .catch((err: AxiosError) => {

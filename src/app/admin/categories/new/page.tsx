@@ -14,7 +14,6 @@ import React, { useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { MdOutlineArrowDropDown } from "react-icons/md";
 import { useMutation } from "react-query";
-import { useGetCategories } from "../page";
 
 const Page = () => {
   const [category, setCategory] = useState("");

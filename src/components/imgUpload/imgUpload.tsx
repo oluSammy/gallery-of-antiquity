@@ -20,15 +20,26 @@ type Props = {
 };
 
 function ImgUpload(props: Props) {
-  const onDrop = useCallback((acceptedFiles: any[]) => {
-    props.setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
+  const [previews, setPreviews] = useState<FileType[]>([]);
+  const onDrop = useCallback(
+    (acceptedFiles: any[]) => {
+      props.setFiles(
+        acceptedFiles.map((file) => {
+          return file;
         })
-      )
-    );
-  }, []);
+      );
+
+      setPreviews(
+        acceptedFiles.map((file) => {
+          return Object.assign(file, {
+            preview: URL.createObjectURL(file),
+          });
+        })
+      );
+    },
+    [props]
+  );
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     maxFiles: 1,
@@ -51,17 +62,17 @@ function ImgUpload(props: Props) {
         )}
       </div>
       <div className="col-span-full lg:col-span-6">
-        {props.files.length > 0 && (
+        {previews.length > 0 && (
           <figure className="w-full h-[170px]">
             {" "}
             <Image
-              src={props.files[0].preview}
-              alt={props.files[0].name}
+              src={previews[0].preview}
+              alt={previews[0].name}
               width={300}
               height={300}
               className="w-full h-full object-cover rounded-md"
             />
-            <span className="text-xs mt-2">{props.files[0].name}</span>
+            <span className="text-xs mt-2">{previews[0].name}</span>
           </figure>
         )}
       </div>

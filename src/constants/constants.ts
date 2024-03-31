@@ -22,6 +22,7 @@ export const constants = {
     return "/categories";
   },
   PRODUCTS: (id?: string) => (id ? `/products/${id}` : "/products"),
+  OUT_OF_STOCK_PRODUCTS: "/products/out-of-stock",
   categoriesByTopCategoryId: (id: string) => `/categories/topCategoryId/${id}`,
 };
 

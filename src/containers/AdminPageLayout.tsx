@@ -84,7 +84,7 @@ const AdminPageLayout = (props: Props) => {
         </div>
       </div>
       <div className="admin-container">
-        <div className="admin-sidebar pt-10">
+        <div className="admin-sidebar pt-10 sticky top-0">
           {Nav.map((item) => (
             <Link
               key={item.label}
