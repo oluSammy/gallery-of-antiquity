@@ -9,6 +9,7 @@ export const constants = {
   GET_EMAIL_VERIFICATION: (email: string) => `/verification/${email}`,
   RESET_PASSWORD: (token: string) => `/reset-password/${token}`,
   CHANGE_PASSWORD: "/change-password",
+  OUT_OF_STOCK_PRODUCTS: "/products/out-of-stock",
   TOP_CATEGORY: (id?: string) => {
     if (id) {
       return `/categories/top/${id}`;
@@ -22,8 +23,8 @@ export const constants = {
     return "/categories";
   },
   PRODUCTS: (id?: string) => (id ? `/products/${id}` : "/products"),
-  OUT_OF_STOCK_PRODUCTS: "/products/out-of-stock",
   categoriesByTopCategoryId: (id: string) => `/categories/topCategoryId/${id}`,
+  PRODUCTS_STATS: "/products/stats",
 };
 
 export const dateTimeFormat = {

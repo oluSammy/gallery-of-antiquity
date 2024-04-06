@@ -26,8 +26,6 @@ async function getTopCategoriesHandler(
 ) {
   const categoryService = new CategoriesService();
 
-  console.log("HERE  3");
-
   const result = await auth(req, res);
   result?.user.accessToken || "";
 

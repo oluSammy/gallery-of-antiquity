@@ -37,7 +37,7 @@ const ActiveDialog = (props: Props) => {
           openNotificationWithMessage({
             type: "success",
             title: "Done",
-            description: `Category ${
+            description: `${props.title} ${
               props.type === "enable" ? "enabled" : "disabled"
             }`,
           })
@@ -51,7 +51,7 @@ const ActiveDialog = (props: Props) => {
             title: "Error",
             description: `Unable to ${
               props.type === "enable" ? "enable" : "disable"
-            } category`,
+            } ${props.title}`,
           })
         );
       }

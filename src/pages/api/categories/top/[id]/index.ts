@@ -8,8 +8,6 @@ import { apiHandler } from "@/pages/api/apiHandler";
 async function getOneTopCategory(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
-  console.log("HERE  2");
-
   const { id } = req.query;
   const result = await auth(req, res);
   result?.user.accessToken || "";

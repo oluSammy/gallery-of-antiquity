@@ -97,11 +97,6 @@ const Page = () => {
           <IoIosAdd className="border rounded-md mr-1" />
           <span className="ml-1 ">Add Category</span>
         </Link>
-        {/* <FilterDropdown
-          options={filterOptions}
-          selectedOptions={selectedFilterOptions}
-          setSelectedOptions={setSelectedFilterOptions}
-        /> */}
         <div className="lg:w-64">
           <div className="relative">
             <GoSearch className="absolute top-1/2 -translate-y-1/2 left-5" />

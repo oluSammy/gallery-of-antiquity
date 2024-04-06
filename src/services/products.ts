@@ -33,6 +33,31 @@ class ProductService {
       method: "GET",
     });
   }
+
+  async getProductsStats(apiKey: string, query: Record<string, any>) {
+    return await callApi({
+      apiPath: "product/stats",
+      apiKey,
+      queryParameters: query,
+      method: "GET",
+    });
+  }
+
+  async getOneProduct(apiKey: string, id: string) {
+    return await callApi({
+      apiPath: `product/${id}`,
+      apiKey,
+    });
+  }
+
+  async updateProduct(apiKey: string, id: string, body: Record<string, any>) {
+    return await callApi({
+      apiPath: `product/${id}`,
+      apiKey,
+      body,
+      method: "PUT",
+    });
+  }
 }
 
 export default ProductService;

@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import Image from "next/image";
+import PrimaryButton from "../Button/PrimaryButton";
+import ActionButton from "../Button/ActionButton";
 
 export type FileType = {
   path: string;
@@ -17,10 +19,12 @@ export type FileType = {
 type Props = {
   files: FileType[];
   setFiles: React.Dispatch<React.SetStateAction<FileType[]>>;
+  url?: string;
 };
 
 function ImgUpload(props: Props) {
   const [previews, setPreviews] = useState<FileType[]>([]);
+  const [imgUrl, setImgUrl] = useState<string>(props.url || "");
   const onDrop = useCallback(
     (acceptedFiles: any[]) => {
       props.setFiles(
@@ -47,6 +51,34 @@ function ImgUpload(props: Props) {
       "image/*": [".jpeg", ".png"],
     },
   });
+
+  useEffect(() => {
+    if (props.url) {
+      setImgUrl(props.url);
+    }
+  }, [props.url]);
+
+  if (props.url && imgUrl) {
+    return (
+      <div className="flex items-baseline ">
+        <figure className="w-[90%] mr-2 h-[170px]">
+          {" "}
+          <Image
+            src={props.url}
+            alt={props.url}
+            width={300}
+            height={300}
+            className="w-full h-full object-cover rounded-md"
+          />
+        </figure>
+        <ActionButton
+          label="update"
+          onClick={() => setImgUrl("")}
+          className="-mt-4"
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="mt-8 grid grid-cols-12 gap-x-8">

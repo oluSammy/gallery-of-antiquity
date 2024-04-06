@@ -5,7 +5,7 @@ import DashboardCard from "@/components/DashboardCard/DashboardCard";
 import TabComponent from "@/components/TabComponent/TabComponent";
 import AdminPageLayout from "@/containers/AdminPageLayout";
 import Link from "next/link";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { LuTrendingUp } from "react-icons/lu";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import { IoIosAdd, IoIosArrowForward } from "react-icons/io";
@@ -22,10 +22,17 @@ import { formatNumber } from "@/utils/formatnumber";
 import PaginatedItems from "@/components/pagination";
 import Image from "next/image";
 import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
+import useGetTopCategories from "@/hooks/useGetTopCategories";
+import { useGetCategories } from "@/hooks/useGetCategories";
 
 const Page = () => {
   const [option, setOption] = useState("today");
-  const [selectedFilterOptions, setSelectedFilterOptions] = useState([""]);
+  const [selectedCategoryFilterOptions, setSelectedCategoryFilterOptions] =
+    useState([""]);
+  const [
+    selectedTopCategoryFilterOptions,
+    setSelectedTopCategoryFilterOptions,
+  ] = useState([""]);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [outOfStockSearchQuery, setOutOfStockSearchQuery] = useState("");
@@ -40,7 +47,13 @@ const Page = () => {
   const limit = 10;
 
   const apiClient = useApiClient();
-  const filterOptions = ["T Shirt", "Art", "Pictures", "Caps", "puzzles"];
+  const [categoryFilterOptions, setCategoryFilterOptions] = useState<
+    { categoryName: string; _id: string }[]
+  >([]);
+  const [topCategoryFilterOptions, setTopCategoryFilterOptions] = useState<
+    { productType: string; _id: string }[]
+  >([]);
+
   const options = ["today", "1 Month", "1 Year"];
   const columns = useMemo<Column<any>[]>(
     () => [
@@ -104,7 +117,7 @@ const Page = () => {
       {
         Header: "Action",
         Cell: (cell) => {
-          const url = constants.CATEGORY(cell.row.original._id);
+          const url = constants.PRODUCTS(cell.row.original._id);
           return (
             <ActiveDialog
               name={cell.row.original.categoryName}
@@ -122,7 +135,7 @@ const Page = () => {
         Cell: (cell) => {
           return (
             <Link
-              href={`/admin/categories/edit/${cell.row.original._id}`}
+              href={`/admin/products/edit/${cell.row.original._id}`}
               className={`flex items-center justify-center rounded-full text-[#737373]  hover:bg-[#f7f7f7] h-7 w-7 font-bold border-[#8B83BA] border-2 cursor-pointer`}
             >
               <IoIosArrowForward className="text-[#8B83BA]" />
@@ -134,13 +147,41 @@ const Page = () => {
     []
   );
 
+  const categoryNames = selectedCategoryFilterOptions.filter(Boolean);
+  const catIds = categoryNames
+    .map((name) => {
+      const option = categoryFilterOptions.find((option) => {
+        if (option.categoryName === name) return option;
+      });
+      return option?._id;
+    })
+    .join("-");
+
+  const topCategoryNames = selectedTopCategoryFilterOptions.filter(Boolean);
+  const topIds = topCategoryNames
+    .map((name) => {
+      const option = topCategoryFilterOptions.find((option) => {
+        if (option.productType === name) return option;
+      });
+      return option?._id;
+    })
+    .join("-");
+
   const { data, isLoading, isFetching } = useQuery<any, Error>(
-    ["get-all-products", debouncedValue, page, limit],
+    [
+      "get-all-products",
+      debouncedValue,
+      page,
+      limit,
+      selectedCategoryFilterOptions,
+      selectedTopCategoryFilterOptions,
+    ],
     async () => {
       let urlString = `${constants.PRODUCTS()}?search=${[
         "productName",
         debouncedValue,
-      ]}&page=${page}&limit=${limit}`;
+      ]}&page=${page}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
+
       const response = await apiClient.get(urlString);
       return response.data;
     }
@@ -156,23 +197,64 @@ const Page = () => {
       debouncedOutOfStockValue,
       outOfStockPage,
       limit,
+      selectedCategoryFilterOptions,
+      selectedTopCategoryFilterOptions,
     ],
     async () => {
       let urlString = `${constants.OUT_OF_STOCK_PRODUCTS}?search=${[
         "productName",
         debouncedOutOfStockValue,
-      ]}&page=${outOfStockPage}&limit=${limit}`;
+      ]}&page=${outOfStockPage}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
       const response = await apiClient.get(urlString);
       return response.data;
     }
   );
 
-  // console.log(
-  //   {
-  //     outOfStockData,
-  //   },
-  //   "....--- "
-  // );
+  const {
+    data: topCategories,
+    // isLoading: isLoadingTopCategories,
+    // isFetching: isFetchingTopCategories,
+  } = useGetTopCategories(1, 10000, "productType", "");
+
+  const {
+    data: categories,
+    // isLoading: isLoadingCategories,
+    // isFetching: isFetchingCategories,
+  } = useGetCategories("", 1, 10000);
+
+  // const option === "today" ? 1 : option === "1 Month" ? 30 : 365;
+  const { data: productStat, isLoading: isLoadingProductStat } = useQuery<
+    any,
+    Error
+  >(["get-product-stats", option], async () => {
+    const opt = option === "today" ? 1 : option === "1 Month" ? 30 : 365;
+    const response = await apiClient.get(
+      `${constants.PRODUCTS_STATS}?days=${opt}`
+    );
+    return response.data;
+  });
+
+  useEffect(() => {
+    if (topCategories) {
+      setTopCategoryFilterOptions(topCategories.products.products);
+      console.log(topCategories, "topCategories");
+    }
+
+    if (categories) {
+      setCategoryFilterOptions(categories.category);
+      console.log(categories, "categories");
+    }
+  }, [categories, topCategories]);
+
+  const currentQuantity = productStat
+    ? productStat.inventory.currentInventory.totalQuantity
+    : 0;
+  const prevQuantity = productStat
+    ? productStat.inventory.requestedInventory.totalQuantity
+    : 0;
+
+  const diff = currentQuantity - prevQuantity;
+  const percentageDiff = (diff / prevQuantity) * 100;
 
   return (
     <AdminPageLayout pageTitle="Products">
@@ -189,7 +271,9 @@ const Page = () => {
             title="Products"
             change={
               <div className="flex items-center text-black">
-                <p>+91.5%</p>
+                <p>
+                  {diff === 0 ? "-" : `${formatNumber(percentageDiff, 2)}%`}
+                </p>
                 <LuTrendingUp className="ml-2" />{" "}
               </div>
             }
@@ -197,7 +281,13 @@ const Page = () => {
             icon={
               <MdProductionQuantityLimits className="text-[#A5A5A5] -mt-5 " />
             }
-            data="199"
+            data={
+              productStat
+                ? formatNumber(
+                    productStat.inventory.currentInventory.totalQuantity
+                  )
+                : "-"
+            }
           />
         </div>
 
@@ -210,9 +300,20 @@ const Page = () => {
             <span className="ml-1 ">Add Product</span>
           </Link>
           <FilterDropdown
-            options={filterOptions}
-            selectedOptions={selectedFilterOptions}
-            setSelectedOptions={setSelectedFilterOptions}
+            prop={[
+              {
+                options: categoryFilterOptions.map((el) => el.categoryName),
+                selectedOptions: selectedCategoryFilterOptions,
+                setSelectedOptions: setSelectedCategoryFilterOptions,
+                title: "Category",
+              },
+              {
+                options: topCategoryFilterOptions.map((el) => el.productType),
+                selectedOptions: selectedTopCategoryFilterOptions,
+                setSelectedOptions: setSelectedTopCategoryFilterOptions,
+                title: "Top Category",
+              },
+            ]}
           />
           <div className="lg:w-64">
             <div className="relative">

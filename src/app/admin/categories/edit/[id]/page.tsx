@@ -9,13 +9,9 @@ import useApiClient from "@/hooks/useApiClient";
 import { openNotificationWithMessage } from "@/redux/Notification";
 import { useAppDispatch } from "@/redux/hooks";
 import Link from "next/link";
-// import { useRouter } from "next/navigation";
-// import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { useMutation, useQuery } from "react-query";
-
-const PER_PAGE = 10;
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [category, setCategory] = useState("");

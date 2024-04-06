@@ -4,15 +4,16 @@ import CategoriesService from "@/services/category";
 import { auth } from "@/auth/auth";
 import { StatusCodes } from "http-status-codes";
 import { apiHandler } from "@/pages/api/apiHandler";
+import ProductService from "@/services/products";
 
-async function getOneCategory(req: NextApiRequest, res: NextApiResponse) {
-  const categoryService = new CategoriesService();
+async function getOneProduct(req: NextApiRequest, res: NextApiResponse) {
+  const productService = new ProductService();
 
   const { id } = req.query;
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.getOneCategory(
+  const data = await productService.getOneProduct(
     result?.user.accessToken || "",
     id as string
   );
@@ -20,14 +21,14 @@ async function getOneCategory(req: NextApiRequest, res: NextApiResponse) {
   return res.status(StatusCodes.CREATED).json(data);
 }
 
-async function updateCategory(req: NextApiRequest, res: NextApiResponse) {
-  const categoryService = new CategoriesService();
+async function updateProduct(req: NextApiRequest, res: NextApiResponse) {
+  const productService = new ProductService();
 
   const { id } = req.query;
   const result = await auth(req, res);
   result?.user.accessToken || "";
 
-  const data = await categoryService.updateCategory(
+  const data = await productService.updateProduct(
     result?.user.accessToken || "",
     id as string,
     req.body
@@ -37,6 +38,6 @@ async function updateCategory(req: NextApiRequest, res: NextApiResponse) {
 }
 
 export default apiHandler({
-  GET: getOneCategory,
-  PUT: updateCategory,
+  GET: getOneProduct,
+  PUT: updateProduct,
 });

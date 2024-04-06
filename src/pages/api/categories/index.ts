@@ -24,8 +24,6 @@ async function createCategory(req: NextApiRequest, res: NextApiResponse) {
 async function getCategories(req: NextApiRequest, res: NextApiResponse) {
   const categoryService = new CategoriesService();
 
-  console.log("HERE  5");
-
   const result = await auth(req, res);
   result?.user.accessToken || "";
 

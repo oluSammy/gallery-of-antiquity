@@ -21,7 +21,7 @@ const DashboardCard = (props: props) => {
         {props.icon}
       </div>
       <div className="flex justify-between items-center">
-        <p className="text-2xl font-semibold">{props.data}</p>
+        <p className="text-2xl font-semibold sans">{props.data}</p>
         <p className="text-sm">{props.change}</p>
       </div>
     </div>

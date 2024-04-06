@@ -2,7 +2,15 @@ import Link from "next/link";
 import React from "react";
 import { IoIosArrowRoundForward } from "react-icons/io";
 
-const PrimaryButton = ({ link, label }: { link: string; label: string }) => {
+const PrimaryButton = ({
+  link,
+  label,
+  onClick,
+}: {
+  link: string;
+  label: string;
+  onClick: () => void;
+}) => {
   return (
     <Link
       href={link}

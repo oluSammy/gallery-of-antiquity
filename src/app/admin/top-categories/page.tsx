@@ -9,14 +9,11 @@ import { Column } from "react-table";
 import Table from "@/components/table/Table";
 import { constants, dateTimeFormat } from "@/constants/constants";
 import { format } from "date-fns";
-import Switch from "@/components/Switch/Switch";
 import { IoIosArrowForward } from "react-icons/io";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
 import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
 import { useDebounce } from "usehooks-ts";
 import PaginatedItems from "@/components/pagination";
-
-const filterOptions = ["T Shirt", "Art", "Pictures", "Caps", "puzzles"];
 
 const Page = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -89,11 +86,6 @@ const Page = () => {
           <IoIosAdd className="border rounded-md mr-1" />
           <span className="ml-1 ">Add Category</span>
         </Link>
-        {/* <FilterDropdown
-          options={filterOptions}
-          selectedOptions={selectedFilterOptions}
-          setSelectedOptions={setSelectedFilterOptions}
-        /> */}
         <div className="lg:w-64">
           <div className="relative">
             <GoSearch className="absolute top-1/2 -translate-y-1/2 left-5" />
