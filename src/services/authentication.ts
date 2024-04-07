@@ -96,6 +96,28 @@ class Authentication {
 
     return res;
   }
+
+  async getAllUsers(token: string, query: Record<string, any>) {
+    const res = await callApi({
+      apiPath: "/auth",
+      method: "GET",
+      queryParameters: query,
+      apiKey: token,
+    });
+
+    return res;
+  }
+
+  async updateUserById(token: string, id: string, body: Record<string, any>) {
+    const res = await callApi({
+      apiPath: `auth/${id}`,
+      method: "put",
+      body,
+      apiKey: token,
+    });
+
+    return res;
+  }
 }
 
 export default Authentication;

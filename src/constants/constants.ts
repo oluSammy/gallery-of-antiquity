@@ -25,6 +25,7 @@ export const constants = {
   PRODUCTS: (id?: string) => (id ? `/products/${id}` : "/products"),
   categoriesByTopCategoryId: (id: string) => `/categories/topCategoryId/${id}`,
   PRODUCTS_STATS: "/products/stats",
+  USERS: (id?: string) => (id ? `/users/${id}` : "/users"),
 };
 
 export const dateTimeFormat = {
