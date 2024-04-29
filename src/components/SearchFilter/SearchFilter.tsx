@@ -21,6 +21,8 @@ type Props = {
   searchPlaceholder: string;
   showFilter?: boolean;
   categories?: CategoryOption[];
+  searchValue?: string;
+  onSearchChange?: (value: string) => void;
 };
 
 const SearchFilter = (props: Props) => {
@@ -31,7 +33,9 @@ const SearchFilter = (props: Props) => {
           <input
             type="search"
             className="bg-[#EFF0F6] sans rounded-md pl-12 outline-none w-full text-sm px-6 py-4 placeholder:text-[#48474B] placeholder:text-sm"
-            placeholder="Search Pictures"
+            placeholder={props.searchPlaceholder}
+            value={props.searchValue}
+            onChange={(e) => props.onSearchChange?.(e.target.value)}
           />
           <CiSearch
             className="absolute top-1/2 -translate-y-1/2 left-4 "

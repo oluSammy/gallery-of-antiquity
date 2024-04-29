@@ -13,8 +13,8 @@ export const useGetCategories = (
     ["get-all-categories", value, page, limit],
     async () => {
       let urlString = `${constants.CATEGORY()}?search=${[
-        "categoryName",
         value,
+        "categoryName",
       ]}&page=${page}&limit=${limit}`;
       const response = await apiClient.get(urlString);
       return response.data;
@@ -22,4 +22,26 @@ export const useGetCategories = (
   );
 
   return { data, isLoading, isFetching };
+};
+
+export const useGetCategoriesByTopCategoryById = (id?: string) => {
+  const apiClient = useApiClient();
+
+  const { data: categories, isFetching: isFetchingCategories } = useQuery<
+    any,
+    Error
+  >(
+    ["get-categories-by-top-category-Id", id],
+    async () => {
+      let urlString = `${constants.categoriesByTopCategoryId(id || "")}`;
+      const response = await apiClient.get(urlString);
+      return response.data;
+    },
+    {
+      keepPreviousData: true,
+      enabled: id ? true : false,
+    }
+  );
+
+  return { data: categories, isFetching: isFetchingCategories };
 };

@@ -11,8 +11,8 @@ const useGetTopCategories = (
   const apiClient = useApiClient();
 
   let urlString = `${constants.TOP_CATEGORY()}?search=${[
-    searchKey,
     search,
+    searchKey,
   ]}&page=${page}&limit=${limit}`;
 
   const { data, isLoading, isFetching } = useQuery<any, Error>(

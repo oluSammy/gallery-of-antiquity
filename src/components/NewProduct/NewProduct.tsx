@@ -36,7 +36,7 @@ const NewProduct = ({ productId }: Props) => {
   const { data: session } = useSession();
   const apiClient = useApiClient();
   const dispatch = useAppDispatch();
-  const router = useRouter()
+  const router = useRouter();
 
   // fetch all top categories
   const { data: topCategories, isLoading: isLoadingTopCategories } =
@@ -172,8 +172,6 @@ const NewProduct = ({ productId }: Props) => {
   useEffect(() => {
     if (product) {
       const prevProduct = product.product[0];
-      console.log(product.product[0], "product");
-      console.log(product.product[0].productPic, "product");
       setCategory({
         id: prevProduct.productCategoryId._id,
         name: prevProduct.productCategoryId.categoryName,
@@ -205,7 +203,7 @@ const NewProduct = ({ productId }: Props) => {
           className={`flex items-center mr-8 hover:bg-[#f7f7f7] px-2 py-1 cursor-pointer font-bold rounded-sm w-fit`}
         >
           <span className="mr-5">
-            {productId ? "Update Product" : "Add New Produtc"}
+            {productId ? "Update Product" : "Add New Product"}
           </span>
         </button>
       </div>

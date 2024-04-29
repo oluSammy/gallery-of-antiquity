@@ -1,6 +1,12 @@
 // "use client";
 
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Image from "next/image";
 import Dropdown from "../Dropdown/Dropdown";
 import { RiSearch2Line } from "react-icons/ri";
@@ -11,6 +17,9 @@ import { IoIosClose } from "react-icons/io";
 import Link from "next/link";
 import Accordion from "../Accordion/Accordion";
 import { useSession, signOut } from "next-auth/react";
+import useGetTopCategories from "@/hooks/useGetTopCategories";
+import { useAppDispatch } from "@/redux/hooks";
+import { createTopCategory } from "@/redux/topCategories";
 
 interface Props {
   isSearchOpen: boolean;
@@ -35,72 +44,72 @@ const userDropDown = [
   },
 ];
 
-const links = [
-  {
-    label: "About",
-    dropdown: [
-      {
-        link: "about",
-        label: "About Us",
-      },
-      {
-        link: "making-of-daps",
-        label: "Making of Dap Centre",
-      },
-    ],
-  },
-  {
-    label: "Visit",
-    dropdown: [
-      {
-        link: "visit",
-        label: "Plan Your Visit",
-      },
-      // {
-      //   link: "tickets",
-      //   label: "Book Tickets",
-      // },
-      {
-        link: "group-ticket",
-        label: "Group Visit",
-      },
-    ],
-  },
-  {
-    label: "Learn",
-    dropdown: [
-      {
-        link: "history",
-        label: "history",
-      },
-      {
-        link: "library",
-        label: "Library",
-      },
-    ],
-  },
-  {
-    label: "Products",
-    dropdown: [
-      {
-        link: "pictures",
-        label: "Pictures",
-      },
-      {
-        link: "souvenir",
-        label: "Nigeria Souvenir",
-      },
-      {
-        link: "books",
-        label: "Books",
-      },
-    ],
-  },
-];
-
 const Navbar = (props: Props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const { data } = useGetTopCategories(1, 100, "", "");
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (data) {
+      dispatch(createTopCategory(data?.products.products));
+    }
+  });
+
+  const links = useMemo(() => {
+    return [
+      {
+        label: "About",
+        dropdown: [
+          {
+            link: "about",
+            label: "About Us",
+          },
+          {
+            link: "making-of-daps",
+            label: "Making of Dap Centre",
+          },
+        ],
+      },
+      {
+        label: "Visit",
+        dropdown: [
+          {
+            link: "visit",
+            label: "Plan Your Visit",
+          },
+          {
+            link: "group-ticket",
+            label: "Group Visit",
+          },
+        ],
+      },
+      {
+        label: "Learn",
+        dropdown: [
+          {
+            link: "history",
+            label: "history",
+          },
+          {
+            link: "library",
+            label: "Library",
+          },
+        ],
+      },
+      {
+        label: "Products",
+        dropdown: data
+          ? data?.products.products.map((product: any) => {
+              return {
+                link: `products/${product.productType.split(" ").join("-")}`,
+                label: product.productType,
+              };
+            })
+          : [],
+      },
+    ];
+  }, [data]);
 
   if (isMenuOpen) {
     return (
@@ -108,6 +117,7 @@ const Navbar = (props: Props) => {
         setIsMenuOpen={setIsMenuOpen}
         setIsSearchOpen={props.setIsSearchOpen}
         isSearchOpen={props.isSearchOpen}
+        links={links}
       />
     );
   }
@@ -137,7 +147,7 @@ const Navbar = (props: Props) => {
               }
               DropdownContent={
                 <ul className="flex flex-col ">
-                  {link.dropdown.map((item) => (
+                  {link.dropdown.map((item: any) => (
                     <Link
                       href={`/${item.link}`}
                       key={item.label}
@@ -241,10 +251,18 @@ const MobileNav = ({
   setIsMenuOpen,
   setIsSearchOpen,
   isSearchOpen,
+  links,
 }: {
   setIsMenuOpen: Dispatch<SetStateAction<boolean>>;
   setIsSearchOpen: Dispatch<SetStateAction<boolean>>;
   isSearchOpen: boolean;
+  links: {
+    label: string;
+    dropdown: {
+      link: string;
+      label: string;
+    }[];
+  }[];
 }) => {
   const { data: session } = useSession();
 

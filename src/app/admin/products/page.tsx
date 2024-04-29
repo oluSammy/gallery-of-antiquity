@@ -24,6 +24,7 @@ import Image from "next/image";
 import ActiveDialog from "@/components/ActiveDialog/ActiveDialog";
 import useGetTopCategories from "@/hooks/useGetTopCategories";
 import { useGetCategories } from "@/hooks/useGetCategories";
+import { useGetProducts } from "@/hooks/useGetProducts";
 
 const Page = () => {
   const [option, setOption] = useState("today");
@@ -147,68 +148,53 @@ const Page = () => {
     []
   );
 
-  const categoryNames = selectedCategoryFilterOptions.filter(Boolean);
-  const catIds = categoryNames
-    .map((name) => {
-      const option = categoryFilterOptions.find((option) => {
-        if (option.categoryName === name) return option;
-      });
-      return option?._id;
-    })
-    .join("-");
-
-  const topCategoryNames = selectedTopCategoryFilterOptions.filter(Boolean);
-  const topIds = topCategoryNames
-    .map((name) => {
-      const option = topCategoryFilterOptions.find((option) => {
-        if (option.productType === name) return option;
-      });
-      return option?._id;
-    })
-    .join("-");
-
-  const { data, isLoading, isFetching } = useQuery<any, Error>(
-    [
-      "get-all-products",
-      debouncedValue,
-      page,
-      limit,
-      selectedCategoryFilterOptions,
-      selectedTopCategoryFilterOptions,
-    ],
-    async () => {
-      let urlString = `${constants.PRODUCTS()}?search=${[
-        "productName",
-        debouncedValue,
-      ]}&page=${page}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
-
-      const response = await apiClient.get(urlString);
-      return response.data;
-    }
+  const { data, isLoading, isFetching } = useGetProducts(
+    selectedCategoryFilterOptions,
+    categoryFilterOptions,
+    selectedTopCategoryFilterOptions,
+    topCategoryFilterOptions,
+    debouncedValue,
+    page,
+    limit
   );
 
   const {
     data: outOfStockData,
     isLoading: isLoadingOutOfStock,
     isFetching: isFetchingOutOfStock,
-  } = useQuery<any, Error>(
-    [
-      "get-all-out-of-products",
-      debouncedOutOfStockValue,
-      outOfStockPage,
-      limit,
-      selectedCategoryFilterOptions,
-      selectedTopCategoryFilterOptions,
-    ],
-    async () => {
-      let urlString = `${constants.OUT_OF_STOCK_PRODUCTS}?search=${[
-        "productName",
-        debouncedOutOfStockValue,
-      ]}&page=${outOfStockPage}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
-      const response = await apiClient.get(urlString);
-      return response.data;
-    }
+  } = useGetProducts(
+    selectedCategoryFilterOptions,
+    categoryFilterOptions,
+    selectedTopCategoryFilterOptions,
+    topCategoryFilterOptions,
+    debouncedOutOfStockValue,
+    outOfStockPage,
+    limit,
+    false
   );
+
+  // const {
+  //   data: outOfStockData,
+  //   isLoading: isLoadingOutOfStock,
+  //   isFetching: isFetchingOutOfStock,
+  // } = useQuery<any, Error>(
+  //   [
+  //     "get-all-out-of-products",
+  //     debouncedOutOfStockValue,
+  //     outOfStockPage,
+  //     limit,
+  //     selectedCategoryFilterOptions,
+  //     selectedTopCategoryFilterOptions,
+  //   ],
+  //   async () => {
+  //     let urlString = `${constants.OUT_OF_STOCK_PRODUCTS}?search=${[
+  //       debouncedOutOfStockValue,
+  //       "productName",
+  //     ]}&page=${outOfStockPage}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
+  //     const response = await apiClient.get(urlString);
+  //     return response.data;
+  //   }
+  // );
 
   const {
     data: topCategories,
@@ -223,16 +209,16 @@ const Page = () => {
   } = useGetCategories("", 1, 10000);
 
   // const option === "today" ? 1 : option === "1 Month" ? 30 : 365;
-  const { data: productStat, isLoading: isLoadingProductStat } = useQuery<
-    any,
-    Error
-  >(["get-product-stats", option], async () => {
-    const opt = option === "today" ? 1 : option === "1 Month" ? 30 : 365;
-    const response = await apiClient.get(
-      `${constants.PRODUCTS_STATS}?days=${opt}`
-    );
-    return response.data;
-  });
+  const { data: productStat } = useQuery<any, Error>(
+    ["get-product-stats", option],
+    async () => {
+      const opt = option === "today" ? 1 : option === "1 Month" ? 30 : 365;
+      const response = await apiClient.get(
+        `${constants.PRODUCTS_STATS}?days=${opt}`
+      );
+      return response.data;
+    }
+  );
 
   useEffect(() => {
     if (topCategories) {
@@ -250,7 +236,7 @@ const Page = () => {
     ? productStat.inventory.currentInventory.totalQuantity
     : 0;
   const prevQuantity = productStat
-    ? productStat.inventory.requestedInventory.totalQuantity
+    ? productStat.inventory.requestedInventory?.totalQuantity
     : 0;
 
   const diff = currentQuantity - prevQuantity;
