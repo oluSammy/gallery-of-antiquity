@@ -88,18 +88,38 @@ const Page = ({ params }: { params: { slug: string } }) => {
                   </div>
                 )
               )
-            : products?.products.map((product: any) => (
-                <div
-                  key={product._id}
-                  className="col-span-full lg:col-span-4 xl:col-span-3 px-2 mb-4 lg:px-0"
-                >
-                  <Book
-                    imgSrc={product.productPic}
-                    name={product.productName}
-                    price={product.amount}
-                  />
-                </div>
-              ))}
+            : products?.products.map((product: any) => {
+                let min = 0;
+                let max = 0;
+
+                if (product.amountRange && product.amountRange[0]) {
+                  min = product.amountRange[0].amount;
+                  max = product.amountRange[0].amount;
+
+                  product.amountRange.forEach((level: any) => {
+                    if (level.amount > max) {
+                      max = level.amount;
+                    }
+                    if (level.amount < min) {
+                      min = level.amount;
+                    }
+                  });
+                }
+                return (
+                  <div
+                    key={product._id}
+                    className="col-span-full lg:col-span-4 xl:col-span-3 px-2 mb-4 lg:px-0"
+                  >
+                    <Book
+                      imgSrc={product.productPic}
+                      name={product.productName}
+                      price={product.amount}
+                      link={`/product/${product._id}`}
+                      priceRange={product.amountRange ? [min, max] : [0, 0]}
+                    />
+                  </div>
+                );
+              })}
         </div>
         <div className="pb-20">
           <PaginatedItems

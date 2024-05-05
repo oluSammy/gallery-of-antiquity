@@ -22,8 +22,12 @@ type Props = {
 const NewProduct = ({ productId }: Props) => {
   const [category, setCategory] = useState({ id: "", name: "" });
   const [name, setName] = useState("");
+  const [small, setSmall] = useState("");
+  const [large, setLarge] = useState("");
+  const [medium, setMedium] = useState("");
   const [size, setSize] = useState("");
   const [description, setDescription] = useState("");
+  const [priceType, setPriceType] = useState<"fixed" | "range">("fixed");
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState("");
   const [files, setFiles] = useState<any[]>([]);
@@ -91,13 +95,24 @@ const NewProduct = ({ productId }: Props) => {
           formData.append("productPic", files[0]);
         }
         formData.append("productName", name);
-        size.split(",").map((item: string, index: number) => {
-          formData.append("size", item);
-        });
         formData.append("productCategoryId", category.id);
         formData.append("productFeatId", topCategory.id);
         formData.append("description", description);
-        formData.append("amount", amount);
+        if (priceType === "fixed") {
+          formData.append("amount", amount);
+        } else {
+          const amountRange = [];
+          if (small) {
+            amountRange.push({ size: "small", amount: small });
+          }
+          if (medium) {
+            amountRange.push({ size: "medium", amount: medium });
+          }
+          if (large) {
+            amountRange.push({ size: "large", amount: large });
+          }
+          formData.append("amountRange", JSON.stringify(amountRange));
+        }
         formData.append("quantity", quantity);
         formData.append("inStock", "true");
 
@@ -137,6 +152,9 @@ const NewProduct = ({ productId }: Props) => {
           id: "",
           name: "",
         });
+        setSmall("");
+        setMedium("");
+        setLarge("");
 
         dispatch(
           openNotificationWithMessage({
@@ -294,20 +312,72 @@ const NewProduct = ({ productId }: Props) => {
               placeholder="Product Description"
               className="mb-2"
             />
-            <CustomInput
-              value={amount}
-              setValue={setAmount}
-              type="number"
-              placeholder="Amount"
-              className="mb-2"
-            />
-            <CustomInput
-              value={size}
-              setValue={setSize}
-              type="text"
-              placeholder="Size"
-              className="mb-2"
-            />
+            <div className="my-4">
+              <h4 className="font-bold mb-2">Price Type</h4>
+              <div className="flex items-center">
+                <div className="flex items-center mr-4">
+                  <label htmlFor="fixed" className="cursor-pointer">
+                    Fixed
+                  </label>
+                  <input
+                    className="mr-1.5 ml-1 cursor-pointer"
+                    id="fixed"
+                    name="price-type"
+                    type="radio"
+                    value={priceType}
+                    checked={priceType === "fixed"}
+                    onChange={(e) => setPriceType("fixed")}
+                  />
+                </div>
+                <div className="flex items-center">
+                  <label htmlFor="range" className="cursor-pointer">
+                    Range
+                  </label>
+                  <input
+                    className="mr-1.5 ml-1 cursor-pointer"
+                    id="range"
+                    name="price-type"
+                    value={priceType}
+                    type="radio"
+                    onChange={(e) => setPriceType("range")}
+                    checked={priceType === "range"}
+                  />
+                </div>
+              </div>
+            </div>
+            {priceType === "fixed" ? (
+              <CustomInput
+                value={amount}
+                setValue={setAmount}
+                type="number"
+                placeholder="Amount"
+                className="mb-2"
+              />
+            ) : (
+              <div>
+                <CustomInput
+                  value={small}
+                  setValue={setSmall}
+                  type="number"
+                  placeholder="Amount for small"
+                  className="mb-2"
+                />
+                <CustomInput
+                  value={medium}
+                  setValue={setMedium}
+                  type="number"
+                  placeholder="Amount for medium"
+                  className="mb-2"
+                />
+                <CustomInput
+                  value={large}
+                  setValue={setLarge}
+                  type="number"
+                  placeholder="Amount for large"
+                  className="mb-2"
+                />
+              </div>
+            )}
             <CustomInput
               value={quantity}
               setValue={setQuantity}
@@ -326,7 +396,7 @@ const NewProduct = ({ productId }: Props) => {
                 !category.id ||
                 !topCategory.id ||
                 !name ||
-                !amount ||
+                (!amount && (!small || !medium || !large)) ||
                 !quantity ||
                 (!files.length && !productPic)
               }

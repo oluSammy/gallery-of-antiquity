@@ -40,8 +40,6 @@ export const useGetProducts = (
     })
     .join("-");
 
-  console.log({ catIds, categoryNames, categoryFilterOptions }, "catIds");
-
   const topCategoryNames = selectedTopCategoryFilterOptions.filter(Boolean);
   const topIds = topCategoryNames
     .map((name) => {

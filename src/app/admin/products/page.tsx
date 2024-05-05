@@ -91,7 +91,30 @@ const Page = () => {
         Header: "Price",
         accessor: "amount",
         Cell: (cell) => {
-          return <> {formatNumber(cell.row.original.amount)} </>;
+          const { amountRange, amount } = cell.row.original;
+          let min = 0;
+          let max = 0;
+
+          if (amountRange && amountRange[0]) {
+            min = amountRange[0].amount;
+            max = amountRange[0].amount;
+
+            amountRange.forEach((level: any) => {
+              if (level.amount > max) {
+                max = level.amount;
+              }
+              if (level.amount < min) {
+                min = level.amount;
+              }
+            });
+          }
+          return (
+            <>
+              {amount
+                ? formatNumber(amount)
+                : `${formatNumber(min)} -  ${formatNumber(max)}`}{" "}
+            </>
+          );
         },
       },
       {
@@ -105,7 +128,15 @@ const Page = () => {
         Header: "Sizes",
         accessor: "sizes",
         Cell: (cell) => {
-          return <> {cell.row.original.size.join(", ")} </>;
+          const { amountRange } = cell.row.original;
+          return (
+            <>
+              {" "}
+              {amountRange && amountRange[0]
+                ? amountRange.map((range: any) => range.size).join(", ")
+                : "-"}{" "}
+            </>
+          );
         },
       },
       {
@@ -172,29 +203,6 @@ const Page = () => {
     limit,
     false
   );
-
-  // const {
-  //   data: outOfStockData,
-  //   isLoading: isLoadingOutOfStock,
-  //   isFetching: isFetchingOutOfStock,
-  // } = useQuery<any, Error>(
-  //   [
-  //     "get-all-out-of-products",
-  //     debouncedOutOfStockValue,
-  //     outOfStockPage,
-  //     limit,
-  //     selectedCategoryFilterOptions,
-  //     selectedTopCategoryFilterOptions,
-  //   ],
-  //   async () => {
-  //     let urlString = `${constants.OUT_OF_STOCK_PRODUCTS}?search=${[
-  //       debouncedOutOfStockValue,
-  //       "productName",
-  //     ]}&page=${outOfStockPage}&limit=${limit}&categoryId=${catIds}&topCategoryId=${topIds}`;
-  //     const response = await apiClient.get(urlString);
-  //     return response.data;
-  //   }
-  // );
 
   const {
     data: topCategories,
