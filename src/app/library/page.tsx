@@ -15,9 +15,9 @@ const page = () => {
           </h1>
           <div className="text-[#4C5760] font-extralight mt-5 text-justify text-xl lg:text-2xl leading-[30px] sans">
             <p>
-              Gallery of Antiquity is unique in bringing together under one
-              roof the culture of the nation, spanning tribes and people . No
-              other museum is responsible for collections of the same depth and
+              Gallery of Antiquity is unique in bringing together under one roof
+              the culture of the nation, spanning tribes and people . No other
+              museum is responsible for collections of the same depth and
               breadth, beauty and significance. Gallery of Antiquity is unique
               in bringing together under one roof the culture of the nation,
               spanning tribes and people . No other museum is responsible for
@@ -25,15 +25,16 @@ const page = () => {
               significance. Gallery of Antiquity is unique in bringing together
               under one roof the culture of the nation, spanning tribes and
               people . No other museum is responsible for collections of the
-              same depth and breadth, beauty and significance. Gallery of Antiquity is unique in bringing together under one roof the culture
-              of the nation, spanning tribes and people . No other museum is
-              responsible for collections of the same depth and breadth, beauty
-              and significance.
+              same depth and breadth, beauty and significance. Gallery of
+              Antiquity is unique in bringing together under one roof the
+              culture of the nation, spanning tribes and people . No other
+              museum is responsible for collections of the same depth and
+              breadth, beauty and significance.
             </p>
             <p className="mt-10">
-              Gallery of Antiquity is unique in bringing together under one
-              roof the culture of the nation, spanning tribes and people . No
-              other museum is responsible for collections of the same depth and
+              Gallery of Antiquity is unique in bringing together under one roof
+              the culture of the nation, spanning tribes and people . No other
+              museum is responsible for collections of the same depth and
               breadth, beauty and significance. Gallery of Antiquity is unique
               in bringing together under one roof the culture of the nation,
               spanning tribes and people . No other museum is responsible for
@@ -59,7 +60,11 @@ const page = () => {
             alt="Dap Library"
           />
           <div className="mt-8">
-            <PrimaryButton link={"/books"} label="Buy Books" />
+            <PrimaryButton
+              onClick={() => {}}
+              link={"/books"}
+              label="Buy Books"
+            />
           </div>
         </div>
       </div>
