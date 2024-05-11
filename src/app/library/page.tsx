@@ -15,31 +15,30 @@ const page = () => {
           </h1>
           <div className="text-[#4C5760] font-extralight mt-5 text-justify text-xl lg:text-2xl leading-[30px] sans">
             <p>
-              DAP Experience Centre is unique in bringing together under one
+              Gallery of Antiquity is unique in bringing together under one
               roof the culture of the nation, spanning tribes and people . No
               other museum is responsible for collections of the same depth and
-              breadth, beauty and significance. DAP Experience Centre is unique
+              breadth, beauty and significance. Gallery of Antiquity is unique
               in bringing together under one roof the culture of the nation,
               spanning tribes and people . No other museum is responsible for
               collections of the same depth and breadth, beauty and
-              significance. DAP Experience Centre is unique in bringing together
+              significance. Gallery of Antiquity is unique in bringing together
               under one roof the culture of the nation, spanning tribes and
               people . No other museum is responsible for collections of the
-              same depth and breadth, beauty and significance. DAP Experience
-              Centre is unique in bringing together under one roof the culture
+              same depth and breadth, beauty and significance. Gallery of Antiquity is unique in bringing together under one roof the culture
               of the nation, spanning tribes and people . No other museum is
               responsible for collections of the same depth and breadth, beauty
               and significance.
             </p>
             <p className="mt-10">
-              DAP Experience Centre is unique in bringing together under one
+              Gallery of Antiquity is unique in bringing together under one
               roof the culture of the nation, spanning tribes and people . No
               other museum is responsible for collections of the same depth and
-              breadth, beauty and significance. DAP Experience Centre is unique
+              breadth, beauty and significance. Gallery of Antiquity is unique
               in bringing together under one roof the culture of the nation,
               spanning tribes and people . No other museum is responsible for
               collections of the same depth and breadth, beauty and
-              significance.DAP Experience Centre is unique in bringing together
+              significance.Gallery of Antiquity is unique in bringing together
               under one roof the culture of the nation, spanning tribes and
               people . No other museum is responsible for collections of the
               same depth and breadth, beauty and significance. DAP Experience

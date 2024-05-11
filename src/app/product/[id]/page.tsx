@@ -13,6 +13,7 @@ import { IoStarOutline } from "react-icons/io5";
 import { useQuery } from "react-query";
 import useApiClient from "@/hooks/useApiClient";
 import { constants } from "@/constants/constants";
+import Markdown from "@/components/Markdown/Markdown";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [qty, setQty] = React.useState(0);
@@ -203,7 +204,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 const ProductDescription = ({ description }: { description: string }) => {
   return (
     <div className="text-[#635B5B] font-normal text-lg lg:w-5/6">
-      {description}
+      <Markdown markdown={description} />
     </div>
   );
 };

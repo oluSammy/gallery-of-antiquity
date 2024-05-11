@@ -67,7 +67,7 @@ const Navbar = (props: Props) => {
           },
           {
             link: "making-of-daps",
-            label: "Making of Dap Centre",
+            label: "The Making",
           },
         ],
       },
@@ -123,15 +123,16 @@ const Navbar = (props: Props) => {
   }
 
   return (
-    <nav className="flex items-center px-8 pt-2 ">
+    <nav className="flex items-center px-8 pt-2 mb-8 mt-2">
       <Link href="/">
-        <Image
+        <p>Gallery of Antiquity</p>
+        {/* <Image
           src="/daps.png"
           alt="Daps Logo"
           width={150}
           height={10}
           className="mr-4 z-10 cursor-pointer"
-        />
+        /> */}
       </Link>
       <ul className="items-center hidden tab:flex ml-8">
         {links.map((link) => (

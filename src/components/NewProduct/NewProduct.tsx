@@ -14,6 +14,7 @@ import CustomInput from "../Input/Input";
 import ImgUpload from "../imgUpload/imgUpload";
 import ActionButton from "../Button/ActionButton";
 import { useRouter } from "next/navigation";
+import MDTextArea from "../Markdown/Editor";
 
 type Props = {
   productId?: string;
@@ -26,7 +27,7 @@ const NewProduct = ({ productId }: Props) => {
   const [large, setLarge] = useState("");
   const [medium, setMedium] = useState("");
   const [size, setSize] = useState("");
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState<string | undefined>("");
   const [priceType, setPriceType] = useState<"fixed" | "range">("fixed");
   const [amount, setAmount] = useState("");
   const [quantity, setQuantity] = useState("");
@@ -97,7 +98,7 @@ const NewProduct = ({ productId }: Props) => {
         formData.append("productName", name);
         formData.append("productCategoryId", category.id);
         formData.append("productFeatId", topCategory.id);
-        formData.append("description", description);
+        formData.append("description", description || "");
         if (priceType === "fixed") {
           formData.append("amount", amount);
         } else {
@@ -195,7 +196,7 @@ const NewProduct = ({ productId }: Props) => {
         name: prevProduct.productCategoryId.categoryName,
       });
       setName(prevProduct.productName);
-      setSize(prevProduct.size.join(","));
+      // setSize(prevProduct.size.join(","));
       setDescription(prevProduct.description);
       setAmount(prevProduct.amount);
       setQuantity(prevProduct.quantity);
@@ -206,6 +207,10 @@ const NewProduct = ({ productId }: Props) => {
       setProductPic(prevProduct.productPic);
     }
   }, [product]);
+
+  // const onDescriptionChange = (value: string | undefined) => {
+  //   setDescription(value);
+  // };
 
   return (
     <div>
@@ -305,13 +310,22 @@ const NewProduct = ({ productId }: Props) => {
               placeholder="Product Name"
               className="mb-2"
             />
-            <CustomInput
+            <>
+            <p className="mt-6 mb-2" >Product Description</p>
+              <MDTextArea
+                value={description}
+                onDescriptionChange={(value?: string) => {
+                  setDescription(value);
+                }}
+              />
+            </>
+            {/* <CustomInput
               value={description}
               setValue={setDescription}
               type="textarea"
               placeholder="Product Description"
               className="mb-2"
-            />
+            /> */}
             <div className="my-4">
               <h4 className="font-bold mb-2">Price Type</h4>
               <div className="flex items-center">

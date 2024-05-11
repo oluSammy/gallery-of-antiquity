@@ -45,7 +45,7 @@ const Hero = () => {
       </video>
       <div className="overlay group">
         <h1 className="text-white lg:text-left text-center font-bold text-4xl lg:text-[51px] lg:leading-[52px] ">
-          Welcome to Dap <br className="lg:block hidden" /> Experience Centre
+          Welcome to The Gallery <br className="lg:block hidden" /> of Antiquity
         </h1>
         <p className="text-[#FDFDFD] font-light text-sm my-8 text-justify">
           Come explore many years of Culture and history of the nation Nigeria{" "}

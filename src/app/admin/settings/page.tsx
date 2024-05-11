@@ -16,7 +16,7 @@ const page = () => {
             notifications will be sent.
           </p>
           <div className="border border-[#CBD5E1] p-3 mt-3">
-            <p className="text-[#6A6A6A]">dapcenter5@gmail.com</p>
+            <p className="text-[#6A6A6A]">center5@gmail.com</p>
           </div>
         </div>
         <div className="mt-4">

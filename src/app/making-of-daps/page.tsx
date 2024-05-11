@@ -9,7 +9,7 @@ const page = () => {
 
       <div className="container text-[#4C5760] text-3xl mx-auto my-20 lg:px-0 px-2">
         <p className="font-light text-justify">
-          DAP Experience Centre is unique in bringing together under one roof
+        Gallery of Antiquity is unique in bringing together under one roof
           the culture of the nation, spanning tribes and people . No other
           museum is responsible for collections of the same depth and breadth,
           beauty and significance.

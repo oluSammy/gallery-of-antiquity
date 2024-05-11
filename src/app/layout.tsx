@@ -6,8 +6,8 @@ import Providers from "../providers/Providers";
 const raleway = Raleway({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Daps",
-  description: "Daps | Musuem...",
+  title: "Gallery of Antiquity",
+  description: "Gallery of Antiquity | Musuem...",
 };
 
 export default function RootLayout({

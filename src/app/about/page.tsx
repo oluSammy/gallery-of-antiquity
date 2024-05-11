@@ -14,7 +14,7 @@ const page = () => {
         <DarkHero subtitle=" The Future Of Museum" title="About Us" />
         <div className="my-28 text-center container mx-auto sans text-[#4C5760] text-xl font-light px-6 lg:px-28">
           <p>
-            DAP Experience Centre is unique in bringing together under one roof
+          Gallery of Antiquity is unique in bringing together under one roof
             the culture of the nation, spanning tribes and people . No other
             museum is responsible for collections of the same depth and breadth,
             beauty and significance.

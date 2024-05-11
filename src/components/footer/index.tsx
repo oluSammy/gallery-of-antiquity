@@ -26,7 +26,7 @@ const Footer = () => {
             </div>
             <div className="lg:col-span-5 col-span-full mb-8 mt-4 lg:mt-0 lg:mb-0">
               <p className="font-bold text-xl text-white mb-4">
-                Dap Experience Centre
+              The Gallery of Antiquity
               </p>
               <ul>
                 <li className="flex items-start mb-3">
@@ -114,7 +114,7 @@ const Footer = () => {
         <div className="flex lg:flex-row flex-col text-xs md:text-sm lg:text-base items-center justify-between text-[#E7EAF6] sans font-light mt-8">
           <div className="flex items-center">
             <p className="mr-3">&copy; {new Date().getFullYear()} </p>
-            <span className="mr-3">Dap Experience Centre.</span>
+            <span className="mr-3">Gallery of Antiquity</span>
             <span>All Rights Reserved</span>
           </div>
           <div className="flex items-center">
